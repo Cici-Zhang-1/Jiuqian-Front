@@ -1,2 +1,2 @@
-# Jiuqian
-Mobile Web App of Jiuqian
+# Jiuqian-Front
+Front-End Development of Mobile Web App of Jiuqian
