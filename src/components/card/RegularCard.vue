@@ -1,52 +1,36 @@
 <template>
-  <div class="col-12">
+  <div class="col-12 my-2">
     <div class="card" :id="cardId">
       <div class="card-header bg-primary d-flex flex-row">
         <div>
           {{ card.name }}
         </div>
         <div class="ml-auto">
-          <router-link to="/checklist" class="btn btn-light btn-sm"><i class="fa fa-minus"></i></router-link>
+          <router-link v-bind:to="checklistsRoute" class="btn btn-dark btn-sm"><i class="fa fa-minus"></i></router-link>
         </div>
       </div>
       <div class="card-body p-0">
         <regular-table :table="card.table"/>
-      </div>
-      <div class="card-footer">
-        <router-view></router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import VueRouter from 'vue-router'
 import RegularTable from '@/components/table/RegularTable'
-import Checklist from '@/components/form/Checklist'
-
-const routes = [
-  {
-    path: '/checklist',
-    component: Checklist
-  }
-]
-const router = new VueRouter({
-  routes
-})
 
 export default {
   name: 'RegularCard',
-  props: ['card', 'index'],
+  props: ['card', 'cardKey', 'cardIndex'],
   data () {
     return {
-      cardId: 'card' + this.index
+      cardId: 'card' + this.cardIndex,
+      checklistsRoute: '/checklists/' + this.cardKey
     }
   },
   components: {
-    RegularTable,
-    Checklist
+    RegularTable
   },
-  template: '<regular-card />',
-  router
+  template: '<regular-card />'
 }
 </script>
