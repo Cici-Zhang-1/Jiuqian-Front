@@ -2,17 +2,20 @@
   "navbars": {
     "Home": {
       "href": "/home",
-      "font": "fa fa-home fa-2x",
+      "font": "fa fa-home",
+      "size": "fa-2x",
       "active": true
     },
     "Apps": {
       "href": "/apps",
-      "font": "fa fa-th fa-2x",
+      "font": "fa fa-th",
+      "size": "fa-2x",
       "active": false
     },
     "App": {
       "name": "App",
-      "font": "fa fa-folder fa-2x",
+      "font": "fa fa-folder",
+      "size": "fa-2x",
       "href": "/app",
       "show": false,
       "active": false,
@@ -20,7 +23,8 @@
     },
     "Myself": {
       "href": "/myself",
-      "font": "fa fa-user fa-2x",
+      "font": "fa fa-user",
+      "size": "fa-2x",
       "active": false
     }
   },
@@ -35,39 +39,60 @@
           "font": "fa fa-plus",
           "size": "fa-2x",
           "href": "/app/createOrder",
-          "funcs": {
-
-          }
+          "funcs": [
+            {
+              "name": "Add",
+              "font": "fa fa-plus",
+              "href": "/app/order/add"
+            },
+            {
+              "name": "Delete",
+              "font": "fa fa-minus",
+              "href": "/app/order/remove"
+            }
+          ]
         },
         "dataUpload": {
           "name": "数据上传",
           "font": "fa fa-upload",
           "size": "fa-2x",
-          "href": "/app/dataUpload"
+          "href": "/app/dataUpload",
+          "funcs": [
+            {
+              "name": "Save",
+              "font": "fa fa-plus",
+              "href": "/app/dataUpload/save"
+            },
+            {
+              "name": "Modify",
+              "font": "fa fa-minus",
+              "href": "/app/dataUpload/modify"
+            }
+          ]
         },
         "waitDismantle": {
           "name": "等待拆单",
           "font": "fa fa-plus",
           "size": "fa-2x",
-          "href": "/app/createOrder"
+          "href": "/app/waitDismantle"
         },
         "orders": {
           "name": "订单列表",
           "font": "fa fa-upload",
           "size": "fa-2x",
-          "href": "/app/dataUpload"
+          "href": "/app/orders"
         },
         "draws": {
           "name": "图纸库",
           "font": "fa fa-plus",
           "size": "fa-2x",
-          "href": "/app/createOrder"
+          "href": "/app/draws"
         },
         "abnomity": {
           "name": "异性板块",
           "font": "fa fa-upload",
           "size": "fa-2x",
-          "href": "/app/dataUpload"
+          "href": "/app/abnormity"
         }
       }
     },
@@ -257,5 +282,41 @@
         }
       }
     }
+  },
+  "myself": {
+    "name": "张闯创",
+    "telephone": "15171454523",
+    "department": "软件开发",
+    "funcs": [
+      {
+        "myOrder": {
+          "name": "我的订单",
+          "font": "fa fa-folder",
+          "href": "/order/myOrder"
+        },
+        "myDealer": {
+          "name": "我的客户",
+          "font": "fa fa-users",
+          "href": "/dealer/myDealer"
+        }
+      },
+      {
+        "mySettings": {
+          "name": "设置",
+          "font": "fa fa-cogs",
+          "href": "/setting/mySettings"
+        },
+        "signout": {
+          "name": "退出",
+          "font": "fa fa-sign-out",
+          "href": "/sign/in"
+        }
+      }
+    ]
+  },
+  "config": {
+    "name": "九千",
+    "logo": "",
+    "href": "/"
   }
 }

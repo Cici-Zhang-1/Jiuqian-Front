@@ -25,6 +25,16 @@ router.beforeResolve((to, from, next) => {
       testData.navbars[i].show = true
     }
   }
+  if (testData.navbars.App.active && from.name == null) {
+    for (let i in testData.apps) {
+      for (let j in testData.apps[i]['children']) {
+        if (testData.apps[i]['children'][j].href === to.path) {
+          testData.navbars.App.font = testData.apps[i]['children'][j].font
+          testData.navbars.App.funcs = testData.apps[i]['children'][j].funcs
+        }
+      }
+    }
+  }
   next()
 })
 /* eslint-disable no-new */

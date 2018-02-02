@@ -1,6 +1,6 @@
 <template>
-  <div class="col-3 my-2">
-    <router-link class="btn p-1 text-center" :to="app.href"><i class="d-block" :class="[app.font, app.size]"></i><small>{{ app.name }}</small></router-link>
+  <div class="col-3 my-2" @click="openApp()">
+    <router-link class="btn p-1 text-center" :to="app.href" tag="a"><i class="d-block" :class="[app.font, app.size]"></i><small>{{ app.name }}</small></router-link>
   </div>
 </template>
 
@@ -11,6 +11,11 @@ export default {
   data () {
     return {}
   },
-  template: '<regular-app />'
+  methods: {
+    openApp: function () {
+      this.$root.$data.navbars.App.font = this.app.font
+      this.$root.$data.navbars.App.funcs = this.app.funcs
+    }
+  }
 }
 </script>
