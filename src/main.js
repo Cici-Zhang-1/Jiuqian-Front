@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import { createStore } from './store'
 import testData from './testData'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/custom.css'
@@ -11,36 +12,26 @@ import 'bootstrap/dist/js/bootstrap.min'
 
 Vue.config.productionTip = false
 
+const store = createStore()
+
 router.beforeResolve((to, from, next) => {
-  const active = true
-  const inactive = false
-  const rootPath = '/' + to.path.split('/').filter(c => {
-    if (c !== '') {
-      return true
-    }
-  }).shift()
-  for (let i in testData.navbars) {
-    testData.navbars[i].active = testData.navbars[i].href === rootPath ? active : inactive
-    if (!(testData.navbars[i].show === true || testData.navbars[i].show === undefined) && testData.navbars[i].active) {
-      testData.navbars[i].show = true
-    }
-  }
-  if (testData.navbars.App.active && from.name == null) {
-    for (let i in testData.apps) {
-      for (let j in testData.apps[i]['children']) {
-        if (testData.apps[i]['children'][j].href === to.path) {
-          testData.navbars.App.font = testData.apps[i]['children'][j].font
-          testData.navbars.App.funcs = testData.apps[i]['children'][j].funcs
-        }
+  // appbar set
+  for (let i in store.state.apps) {
+    for (let j in store.state.apps[i]['children']) {
+      if (store.state.apps[i]['children'][j].href === to.path) {
+        store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
+        break
       }
     }
   }
   next()
 })
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   data: testData,
+  store,
   router,
   components: { App },
   template: '<App/>'

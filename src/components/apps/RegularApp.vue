@@ -1,10 +1,12 @@
 <template>
-  <div class="col-3 my-2" @click="openApp()">
+  <div class="col-3 my-2" @click="openApp({app})">
     <router-link class="btn p-1 text-center" :to="app.href" tag="a"><i class="d-block" :class="[app.font, app.size]"></i><small>{{ app.name }}</small></router-link>
   </div>
 </template>
 
-<script>
+<script type="module">
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'RegularApp',
   props: ['app'],
@@ -12,10 +14,9 @@ export default {
     return {}
   },
   methods: {
-    openApp: function () {
-      this.$root.$data.navbars.App.font = this.app.font
-      this.$root.$data.navbars.App.funcs = this.app.funcs
-    }
+    ...mapMutations({
+      openApp: 'OPEN_APP'
+    })
   }
 }
 </script>

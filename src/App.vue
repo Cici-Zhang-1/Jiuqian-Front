@@ -9,22 +9,19 @@
   </div>
 </template>
 
-<script>
+<script type="module">
+import { mapGetters } from 'vuex'
 import Navbar from '@/components/bars/Navbar'
 
 export default {
   name: 'App',
-  data () {
-    return {
-      navbars: this.$root.$data.navbars
-    }
+  computed: {
+    ...(mapGetters({
+      navbars: 'activeNavbars'
+    }))
   },
   components: {
     Navbar
   }
 }
 </script>
-
-<style>
-
-</style>

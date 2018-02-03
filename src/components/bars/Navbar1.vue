@@ -5,14 +5,19 @@
 </template>
 
 <script type="module">
+import { mapGetters } from 'vuex'
 import NavbarItem from './NavbarItem.vue'
 import NavbarDropdown from './NavbarDropdown.vue'
 
 export default {
   name: 'Navbar',
-  props: ['navbars'],
   data () {
     return {}
+  },
+  computed: {
+    ...(mapGetters({
+      navbars: 'activeNavbars'
+    }))
   },
   components: {
     NavbarItem,

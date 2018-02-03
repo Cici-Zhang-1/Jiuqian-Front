@@ -5,9 +5,7 @@
         <div>
           {{ card.name }}
         </div>
-        <div class="ml-auto">
-          <router-link v-bind:to="settingsRoute" v-show="card.settings" class="btn btn-dark btn-sm"><i class="fa fa-minus"></i></router-link>
-        </div>
+        <slot name="cardSetting"></slot>
       </div>
       <div class="card-body p-0">
         <regular-table v-if="card.type === 'table'" :table="card.contents" :tableThead="tableThead"/>
@@ -39,9 +37,8 @@ export default {
   data () {
     return {
       cardId: 'card' + this.cardIndex,
-      settingsRoute: '/settings/table/' + this.cardKey,
-      contents: this.card.contents,
-      tableThead: this.card.type === 'table' ? this.$root.$data.settings[this.card.type][this.cardKey]['contents'] : false
+      settingsRoute: '/settings/' + this.card.type + '/' + this.cardKey,
+      tableThead: this.card.type === 'table' ? this.$store.state.settings[this.card.type][this.cardKey]['contents'] : false
     }
   },
   components: {

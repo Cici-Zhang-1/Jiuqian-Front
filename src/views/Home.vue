@@ -16,12 +16,16 @@
       <regular-app v-for="(value, index) in apps" :app="value" :key="index"/>
     </div>
     <div class="row mt-2">
-      <div is="regular-card" v-for="(value, key, index) in cards" :card="value" :cardKey="key" :cardIndex="index" :key="index"></div>
+      <div is="regular-card" v-for="(card, key, index) in cards" :card="card" :cardKey="key" :cardIndex="index" :key="index">
+        <div slot="cardSetting" v-show="card.settings" class="ml-auto">
+          <router-link :to="settingsRoute(card, key)" class="btn btn-light btn-sm"><i class="fa fa-minus"></i></router-link>
+        </div>
+      </div>
     </div>
   </main>
 </template>
 
-<script>
+<script type="module">
 import Headerbar from '@/components/bars/Headerbar'
 import search from '@/components/forms/Search'
 import RegularApp from '@/components/apps/RegularApp.vue'
@@ -31,11 +35,23 @@ export default {
   name: 'home',
   data () {
     return {
-      apps: this.$root.$data.home.apps,
-      cards: this.$root.$data.home.cards
     }
   },
-  created () {
+  computed: {
+    home () {
+      return this.$store.getters.getStateByKey('home')
+    },
+    apps () {
+      return this.home.apps
+    },
+    cards () {
+      return this.home.cards
+    }
+  },
+  methods: {
+    settingsRoute (card, cardKey) {
+      return '/settings/' + card.type + '/' + cardKey
+    }
   },
   components: {
     Headerbar,

@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script>
+<script type="module">
 import RegularCard from '@/components/cards/RegularCard'
 import SettingBar from '@/components/bars/SettingBar'
 
@@ -27,25 +27,16 @@ export default {
       required: false
     }
   },
-  data () {
-    return {
-      settings: this.$root.$data.settings,
-      cardKey: 'table',
-      cardIndex: 1,
-      cards: {}
-    }
-  },
-  created () {
-    for (let key in this.settings) {
-      if (this.settingType === key) {
-        if (this.settings[key][this.name]) {
-          this.cards[this.name] = this.settings[key][this.name]
-        }
-        break
+  computed: {
+    cards: {
+      get () {
+        return this.$store.getters.getSettings({settingType: this.settingType, name: this.name})
+      },
+      set () {
+
       }
     }
   },
-  methods: {},
   components: {
     RegularCard,
     SettingBar

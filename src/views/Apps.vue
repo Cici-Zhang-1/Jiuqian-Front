@@ -15,12 +15,10 @@ import RegularAppGroup from '@/components/apps/RegularAppGroup.vue'
 
 export default {
   name: 'apps',
-  data () {
-    return {
-      apps: this.$root.$data.apps
+  computed: {
+    apps () {
+      return this.$store.getters.getStateByKey('apps')
     }
-  },
-  created () {
   },
   components: {
     Headerbar,
