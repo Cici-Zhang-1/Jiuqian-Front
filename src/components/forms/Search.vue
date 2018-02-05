@@ -1,14 +1,42 @@
 <template>
-  <div class="input-group input-group-lg">
-    <div class="input-group-prepend">
+  <div class="input-group">
+    <div class="input-group-prepend" v-if="prepend">
       <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
     </div>
-    <input type="search" class="form-control" aria-label="search" aria-describedby="basic-addon1" />
+    <input type="search" class="form-control" :value="defaultValue" @change="valueChange($event.target.value)" aria-label="search" aria-describedby="basic-addon1" />
+    <div class="input-group-append" v-if="append">
+      <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'search'
+  name: 'search',
+  props: {
+    defaultValue: {
+      type: String,
+      required: true
+    },
+    prepend: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    append: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+  data () {
+    return {}
+  },
+  computed: {},
+  methods: {
+    valueChange: function (value) { // Value Change Emit To Parents
+      this.$emit('input', value)
+    }
+  }
 }
 </script>

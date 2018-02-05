@@ -21,6 +21,7 @@ export function createStore () {
               'font': 'fa fa-align-justify',
               'size': 'fa-2x',
               'href': '/app/location',
+              home: true,
               'funcs': [
                 {
                   name: '入库',
@@ -48,36 +49,7 @@ export function createStore () {
         }
       },
       home: {
-        apps: {
-          'location': {
-            'name': '库位',
-            'font': 'fa fa-align-justify',
-            'size': 'fa-2x',
-            'href': '/app/location',
-            'funcs': [
-              {
-                'name': '入库',
-                'font': 'fa fa-circle-o',
-                'href': '/funcs/location/in'
-              },
-              {
-                'name': '出库',
-                'font': 'fa fa-circle',
-                'href': '/funcs/location/out'
-              },
-              {
-                name: '新增库位',
-                font: 'fa fa-plus',
-                href: '/funcs/location/add'
-              },
-              {
-                name: '删除库位',
-                font: 'fa fa-trash-o',
-                href: '/funcs/location/remove'
-              }
-            ]
-          }
-        },
+        apps: {},
         'cards': {
           'messages': {
             'name': '信息',
@@ -185,7 +157,7 @@ export function createStore () {
           }
         ]
       },
-      'settings': {
+      settings: {
         'table': {
           'btOrders': {
             'name': 'BT订单',

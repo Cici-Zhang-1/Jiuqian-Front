@@ -50,5 +50,17 @@ export default {
       }
     }
     return settings
+  },
+
+  getHomeApps (state) {
+    let homeApps = {}
+    for (let i in state.apps) {
+      for (let j in state.apps[i].children) {
+        if (state.apps[i].children[j].home) {
+          homeApps[j] = state.apps[i].children[j]
+        }
+      }
+    }
+    return homeApps
   }
 }
