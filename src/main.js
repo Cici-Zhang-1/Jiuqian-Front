@@ -14,17 +14,18 @@ Vue.config.productionTip = false
 
 const store = createStore()
 
-router.beforeResolve((to, from, next) => {
-  // appbar set
-  for (let i in store.state.apps) {
-    for (let j in store.state.apps[i]['children']) {
-      if (store.state.apps[i]['children'][j].href === to.path) {
-        store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
-        break
+store.dispatch('FETCH_NAVBARS').then(function () {
+  router.onReady(() => {
+    // appbar set
+    for (let i in store.state.apps) {
+      for (let j in store.state.apps[i]['children']) {
+        if (store.state.apps[i]['children'][j].href === router.currentRoute.path) {
+          store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
+          break
+        }
       }
     }
-  }
-  next()
+  })
 })
 
 /* eslint-disable no-new */

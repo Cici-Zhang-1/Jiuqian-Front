@@ -5,6 +5,8 @@ import Home from '@/views/home'
 import Apps from '@/views/Apps'
 import App from '@/views//App'
 import Myself from '@/views/Myself'
+import Location from '@/views/app/Location'
+import Funcs from '@/views/Funcs'
 
 Vue.use(Router)
 
@@ -29,7 +31,14 @@ export default new Router({
     {
       name: 'App',
       path: '/app',
-      component: App
+      component: App,
+      children: [
+        {
+          name: 'Location',
+          path: 'location',
+          component: Location
+        }
+      ]
     },
     {
       name: 'Myself',
@@ -40,6 +49,13 @@ export default new Router({
       name: 'Settings',
       path: '/settings/:settingType/:name',
       component: Settings,
+      props: true
+    },
+    {
+      name: 'Funcs',
+      path: '/funcs/:funcType/:name',
+      component: Funcs,
+      meta: { showNavbar: false },
       props: true
     }
   ]

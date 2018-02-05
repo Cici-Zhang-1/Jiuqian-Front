@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col">
-        <setting-bar />
+  <div class="container-fluid">
+    <main>
+      <div class="row">
+        <div class="col">
+          <setting-bar />
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div is="regular-card" v-for="(value, key, index) in cards" :card="value" :cardKey="key" :cardIndex="index" :key="index"></div>
-    </div>
+      <div class="row">
+        <div is="regular-card" v-for="(value, key, index) in cards" :card="value" :cardKey="key" :cardIndex="index" :key="index"></div>
+      </div>
+    </main>
   </div>
 </template>
 

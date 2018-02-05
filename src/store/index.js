@@ -9,183 +9,73 @@ Vue.use(Vuex)
 export function createStore () {
   return new Vuex.Store({
     state: {
-      navbars: [
-        {
-          id: 'Home',
-          name: '首页',
-          'href': '/home',
-          'font': 'fa fa-home',
-          'size': 'fa-2x',
-          'show': true,
-          'component': 'navbar-item'
-        },
-        {
-          id: 'Apps',
-          name: '应用',
-          'href': '/apps',
-          'font': 'fa fa-th',
-          'size': 'fa-2x',
-          'show': true,
-          'active': false,
-          'component': 'navbar-item'
-        },
-        {
-          id: 'App',
-          name: '',
-          'font': 'fa fa-folder',
-          'size': 'fa-2x',
-          'href': '/app',
-          'show': false,
-          'funcs': [],
-          'component': 'navbar-dropdown'
-        },
-        {
-          id: 'Myself',
-          name: '我的',
-          'href': '/myself',
-          'font': 'fa fa-user',
-          'size': 'fa-2x',
-          'show': true,
-          'component': 'navbar-item'
-        }
-      ],
+      navbars: [],
       apps: {
-        'order': {
-          'name': '订单',
-          'font': 'fa fa-folder',
+        'database': {
+          'name': '成品库',
+          'font': 'fa fa-database',
           'size': '',
           'children': {
-            'createOrder': {
-              'name': '新建订单',
-              'font': 'fa fa-plus',
+            'location': {
+              'name': '库位',
+              'font': 'fa fa-align-justify',
               'size': 'fa-2x',
-              'href': '/app/createOrder',
+              'href': '/app/location',
               'funcs': [
                 {
-                  'name': 'Add',
-                  'font': 'fa fa-plus',
-                  'href': '/app/order/add'
+                  name: '入库',
+                  font: 'fa fa-circle-o',
+                  href: '/funcs/location/in'
                 },
                 {
-                  'name': 'Delete',
-                  'font': 'fa fa-minus',
-                  'href': '/app/order/remove'
-                }
-              ]
-            },
-            'dataUpload': {
-              'name': '数据上传',
-              'font': 'fa fa-upload',
-              'size': 'fa-2x',
-              'href': '/app/dataUpload',
-              'funcs': [
-                {
-                  'name': 'Save',
-                  'font': 'fa fa-plus',
-                  'href': '/app/dataUpload/save'
+                  name: '出库',
+                  font: 'fa fa-circle',
+                  href: '/funcs/location/out'
                 },
                 {
-                  'name': 'Modify',
-                  'font': 'fa fa-minus',
-                  'href': '/app/dataUpload/modify'
+                  name: '新增库位',
+                  font: 'fa fa-plus',
+                  href: '/funcs/location/add'
+                },
+                {
+                  name: '删除库位',
+                  font: 'fa fa-trash-o',
+                  href: '/funcs/location/remove'
                 }
               ]
-            },
-            'waitDismantle': {
-              'name': '等待拆单',
-              'font': 'fa fa-plus',
-              'size': 'fa-2x',
-              'href': '/app/waitDismantle'
-            },
-            'orders': {
-              'name': '订单列表',
-              'font': 'fa fa-upload',
-              'size': 'fa-2x',
-              'href': '/app/orders'
-            },
-            'draws': {
-              'name': '图纸库',
-              'font': 'fa fa-plus',
-              'size': 'fa-2x',
-              'href': '/app/draws'
-            },
-            'abnomity': {
-              'name': '异性板块',
-              'font': 'fa fa-upload',
-              'size': 'fa-2x',
-              'href': '/app/abnormity'
-            }
-          }
-        },
-        'service': {
-          'name': '客服',
-          'font': 'fa fa-female',
-          'size': '',
-          'children': {
-            'waitCheck': {
-              'name': '等待核价',
-              'font': 'fa fa-plus',
-              'size': 'fa-2x',
-              'href': '/app/waitCheck'
-            },
-            'waitQuote': {
-              'name': '等待报价',
-              'font': 'fa fa-upload',
-              'size': 'fa-2x',
-              'href': '/app/waitQuote'
             }
           }
         }
       },
       home: {
-        'apps': {
-          'createOrder': {
-            'name': '新建订单',
-            'font': 'fa fa-plus',
+        apps: {
+          'location': {
+            'name': '库位',
+            'font': 'fa fa-align-justify',
             'size': 'fa-2x',
-            'href': '/app/createOrder'
-          },
-          'dataUpload': {
-            'name': '数据上传',
-            'font': 'fa fa-upload',
-            'size': 'fa-2x',
-            'href': '/app/dataUpload'
-          },
-          'createOrder1': {
-            'name': '新建订单',
-            'font': 'fa fa-plus',
-            'size': 'fa-2x',
-            'href': '/'
-          },
-          'dataUpload1': {
-            'name': '数据上传',
-            'font': 'fa fa-upload',
-            'size': 'fa-2x',
-            'href': '/'
-          },
-          'createOrder2': {
-            'name': '新建订单',
-            'font': 'fa fa-plus',
-            'size': 'fa-2x',
-            'href': '/'
-          },
-          'dataUpload2': {
-            'name': '数据上传',
-            'font': 'fa fa-upload',
-            'size': 'fa-2x',
-            'href': '/'
-          },
-          'createOrder3': {
-            'name': '新建订单',
-            'font': 'fa fa-plus',
-            'size': 'fa-2x',
-            'href': '/'
-          },
-          'dataUpload3': {
-            'name': '数据上传',
-            'font': 'fa fa-upload',
-            'size': 'fa-2x',
-            'href': '/'
+            'href': '/app/location',
+            'funcs': [
+              {
+                'name': '入库',
+                'font': 'fa fa-circle-o',
+                'href': '/funcs/location/in'
+              },
+              {
+                'name': '出库',
+                'font': 'fa fa-circle',
+                'href': '/funcs/location/out'
+              },
+              {
+                name: '新增库位',
+                font: 'fa fa-plus',
+                href: '/funcs/location/add'
+              },
+              {
+                name: '删除库位',
+                font: 'fa fa-trash-o',
+                href: '/funcs/location/remove'
+              }
+            ]
           }
         },
         'cards': {

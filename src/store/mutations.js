@@ -24,6 +24,10 @@ export default {
     Vue.set(state.users, id, user || false) /* false means user not found */
   },
 
+  SET_NAVBARS: (state, { navbars }) => {
+    state.navbars = navbars
+  },
+
   OPEN_APP: (state, { app }) => {
     state.navbars = state.navbars.map(navbar => {
       if (navbar.id === 'App') {
