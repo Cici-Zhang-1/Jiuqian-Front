@@ -13,7 +13,7 @@
         <check-lists class="p-1" v-else-if="card.type === 'checkbox'" :checkLists="card.contents"/>
       </div>
       <div class="card-footer p-1">
-        <pagination />
+        <slot name="cardFooter"></slot>
       </div>
     </div>
   </div>
@@ -23,7 +23,6 @@
 import RegularTable from '@/components/tables/RegularTable'
 import RegularListGroup from '@/components/lists/RegularListGroup'
 import CheckLists from '@/components/forms/CheckLists'
-import Pagination from '@/components/others/Pagination'
 
 export default {
   name: 'RegularCard',
@@ -44,8 +43,7 @@ export default {
   components: {
     RegularTable,
     RegularListGroup,
-    CheckLists,
-    Pagination
+    CheckLists
   }
 }
 </script>

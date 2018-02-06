@@ -29,6 +29,18 @@ export default {
   },
 
   SET_TABLE_DATA: (state, { tableData }) => {
+    /* for (let i in state.navbars) {
+      if (state.navbars[i].id === 'App') {
+        for (let j in tableData) {
+          if (state.navbars[i].data[j] === undefined) {
+            Vue.set(state.navbars[i].data, j, tableData[j])
+          } else {
+            state.navbars[i].data[j] = tableData[j]
+          }
+        }
+        break
+      }
+    } */
     state.navbars.map(navbar => {
       if (navbar.id === 'App') {
         for (let i in tableData) {

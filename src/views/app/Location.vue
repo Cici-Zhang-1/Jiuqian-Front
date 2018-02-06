@@ -9,6 +9,7 @@
       <div slot="cardSetting" v-show="locationCard.settings" class="ml-auto">
         <router-link :to="settingsRoute()" class="btn btn-light btn-sm"><i class="fa fa-minus"></i></router-link>
       </div>
+      <pagination slot="cardFooter" :page="currentPage" :maxPage="maxPage"/>
     </div>
     <div class="col-12 mt-2" v-if="error">No Data Available</div>
   </div>
@@ -18,6 +19,7 @@
 import { mapGetters } from 'vuex'
 import Search from '@/components/forms/Search'
 import RegularCard from '@/components/cards/RegularCard'
+import Pagination from '@/components/others/Pagination'
 
 export default {
   name: 'Location',
@@ -33,7 +35,11 @@ export default {
   computed: {
     ...mapGetters({
       locationCard: 'currentPage' // 当前页面应该展示的数据
-    })
+    }),
+    maxPage () {
+      let { pagesize, length } = this.locationCard
+      return Math.ceil(length / pagesize)
+    }
   },
   created () {
     this.locationCard.length || this.fetchData()
@@ -47,8 +53,8 @@ export default {
     },
     onSubmit () {
     },
-    fetchData (to = this.currentPage) {
-      // this.error = this.locationCard = null
+    fetchData (to = this.currentPage) { // 获取数据
+      this.error = null
       this.$bar.start()
       this.$store.dispatch('FETCH_TABLE_DATA', {
         params: {
@@ -60,13 +66,15 @@ export default {
           }
         }
       }).then(() => {
+        this.error = !this.locationCard
         this.$bar.finish()
       })
     }
   },
   components: {
     Search,
-    RegularCard
+    RegularCard,
+    Pagination
   }
 }
 </script>

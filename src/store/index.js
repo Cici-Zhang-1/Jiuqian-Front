@@ -49,6 +49,8 @@ export function createStore () {
                 home: true, // 是否显示在home页card区
                 type: 'table', // 数据展现的类型
                 settings: true,
+                length: 0,
+                pagesize: 0,
                 contents: []
               }
             }
@@ -135,9 +137,13 @@ export function createStore () {
         'logo': '',
         'href': '/'
       },
-      test: {
-        checked: false
-      }
+      test: [
+        {
+          a: 1,
+          b: 2,
+          d: {}
+        }
+      ]
     },
     actions,
     mutations,
