@@ -4,7 +4,7 @@
 import Vue from 'vue'
 
 export default {
-  SET_ACTIVE_TYPE: (state, { type }) => {
+  /* SET_ACTIVE_TYPE: (state, { type }) => {
     state.activeType = type
   },
 
@@ -21,7 +21,16 @@ export default {
   },
 
   SET_USER: (state, { id, user }) => {
-    Vue.set(state.users, id, user || false) /* false means user not found */
+    Vue.set(state.users, id, user || false) /!* false means user not found *!/
+  }, */
+
+  SET_APP_URI: (state, { fullPath }) => {
+    state.navbars = state.navbars.map(navbar => {
+      if (navbar.id === 'App') {
+        navbar.href = fullPath
+      }
+      return navbar
+    })
   },
 
   SET_NAVBARS: (state, { navbars }) => {

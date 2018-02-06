@@ -50,7 +50,7 @@ export default {
 
 <style scoped>
   .card-body-h {
-    max-height: 50rem;
-    overflow-y: scroll;
+    /* max-height: 50rem;
+    overflow-y: scroll; */
   }
 </style>

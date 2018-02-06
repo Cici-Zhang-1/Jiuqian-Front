@@ -6,9 +6,7 @@
           <funcbars />
         </div>
       </div>
-      <div>
-        This is Funcs Page
-      </div>
+      <router-view></router-view>
     </main>
   </div>
 </template>

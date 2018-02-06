@@ -10,6 +10,11 @@
 <script>
 export default {
   name: 'NavbarDropdown',
-  props: ['navbar']
+  props: ['navbar'],
+  computed: {
+    to: function () {
+      return this.$router.currentRoute.fullPath
+    }
+  }
 }
 </script>

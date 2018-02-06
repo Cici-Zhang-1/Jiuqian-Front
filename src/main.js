@@ -42,6 +42,14 @@ store.dispatch('FETCH_NAVBARS').then(function () {
         }
       }
     }
+    router.beforeEach(function (to, from, next) {
+      for (let i in to.matched) {
+        if (to.matched[i].name === 'App') {
+          store.commit('SET_APP_URI', to)
+        }
+      }
+      next()
+    })
     app.$mount('#app')
   })
 })

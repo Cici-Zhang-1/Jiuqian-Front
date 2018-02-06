@@ -5,7 +5,7 @@
         <search v-model="keyword" :defaultValue="keyword" :prepend="false" :append="true"/>
       </form>
     </div>
-    <div is="regular-card" :card="locationCard" :cardKey="cardKey" :tableThead="tableThead()" v-if="locationCard">
+    <div is="regular-card" :card="locationCard" :cardKey="cardKey" :tableThead="tableThead()" v-if="locationCard.length">
       <div slot="cardSetting" v-show="locationCard.settings" class="ml-auto">
         <router-link :to="settingsRoute()" class="btn btn-light btn-sm"><i class="fa fa-minus"></i></router-link>
       </div>
@@ -51,7 +51,18 @@ export default {
     }
   },
   created () {
-    this.locationCard.length || this.fetchData()
+    if (!this.locationCard.length || this.page !== this.locationCard.page) { // 第一种情况是因为数据还没有加载，第二种情况是因为加载的page不同
+      this.fetchData()
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      for (let i in to.matched) {
+        if (to.matched[i].name === 'App') {
+          vm.$store.commit('SET_APP_URI', to)
+        }
+      }
+    })
   },
   beforeRouteUpdate (to, from, next) {
     this.fetchData(to.query.page)
@@ -65,8 +76,7 @@ export default {
       return this.locationCard.type === 'table' ? this.$store.state.settings[this.locationCard.type][this.cardKey]['contents'] : false
     },
     onSubmit () {
-      this.page = 1
-      this.fetchData()
+      this.$router.push({query: {page: 1}})
     },
     fetchData (to = this.page) { // 获取数据
       this.$bar.start()
