@@ -70,7 +70,7 @@ export default {
     return homeApps
   },
 
-  currentPage (state) { // 返回当前活动页面第数据
+  currentPageDate (state) { // 返回当前活动页面的数据
     return state.navbars.filter(navbar => {
       return navbar.id === 'App'
     })[0].data

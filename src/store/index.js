@@ -24,14 +24,14 @@ export function createStore () {
               home: true, // 是否显示主页功能区
               'funcs': [
                 {
-                  name: '入库',
-                  font: 'fa fa-circle-o',
-                  href: '/funcs/location/in'
+                  name: '删除库位',
+                  font: 'fa fa-trash-o',
+                  href: '/funcs/location/remove'
                 },
                 {
-                  name: '出库',
-                  font: 'fa fa-circle',
-                  href: '/funcs/location/out'
+                  name: '编辑库位',
+                  font: 'fa fa-plus',
+                  href: '/funcs/location/edit'
                 },
                 {
                   name: '新增库位',
@@ -39,9 +39,14 @@ export function createStore () {
                   href: '/funcs/location/add'
                 },
                 {
-                  name: '删除库位',
-                  font: 'fa fa-trash-o',
-                  href: '/funcs/location/remove'
+                  name: '出库',
+                  font: 'fa fa-circle',
+                  href: '/funcs/location/out'
+                },
+                {
+                  name: '入库',
+                  font: 'fa fa-circle-o',
+                  href: '/funcs/location/in'
                 }
               ],
               data: {
@@ -49,8 +54,11 @@ export function createStore () {
                 home: true, // 是否显示在home页card区
                 type: 'table', // 数据展现的类型
                 settings: true,
+                keyword: '',
                 length: 0,
                 pagesize: 0,
+                page: 1,
+                uri: '/location/read',
                 contents: []
               }
             }
@@ -104,28 +112,18 @@ export function createStore () {
                 'checked': true
               },
               'first': {
-                'label': 'First',
+                'label': '状态',
                 'value': 'First',
                 'checked': true
               },
               'second': {
-                'label': 'Second',
+                'label': '名称',
                 'value': 'Second',
                 'checked': true
               },
               'third': {
-                'label': 'Third',
+                'label': '订单号',
                 'value': 'Third',
-                'checked': true
-              },
-              'fourth': {
-                'label': 'Fourth',
-                'value': 'Fourth',
-                'checked': true
-              },
-              'fifth': {
-                'label': 'Fifth',
-                'value': 'Fifth',
                 'checked': true
               }
             }

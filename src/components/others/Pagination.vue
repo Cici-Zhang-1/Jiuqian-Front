@@ -2,17 +2,17 @@
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center m-0">
       <li class="page-item" :class="{disabled: previous}">
-        <a class="page-link" href="#" aria-label="Previous">
+        <router-link class="page-link" :to="previousRouter" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
           <span class="sr-only">Previous</span>
-        </a>
+        </router-link>
       </li>
       <li class="page-item active"><a class="page-link" href="#">{{ page }}/{{ maxPage }}<span class="sr-only">(current)</span></a></li>
       <li class="page-item" :class="{disabled: next}">
-        <a class="page-link" href="#" aria-label="Next">
+        <router-link class="page-link" :to="nextRouter" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
           <span class="sr-only">Next</span>
-        </a>
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -30,12 +30,23 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      path: this.$router.currentRoute.path
+    }
+  },
   computed: {
     previous () {
       return this.page === 1
     },
     next () {
       return this.page === this.maxPage
+    },
+    previousRouter () {
+      return this.path + '?page=' + (this.page - 1)
+    },
+    nextRouter () {
+      return this.path + '?page=' + (this.page + 1)
     }
   }
 }

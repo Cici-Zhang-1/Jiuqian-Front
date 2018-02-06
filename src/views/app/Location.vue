@@ -9,7 +9,7 @@
       <div slot="cardSetting" v-show="locationCard.settings" class="ml-auto">
         <router-link :to="settingsRoute()" class="btn btn-light btn-sm"><i class="fa fa-minus"></i></router-link>
       </div>
-      <pagination slot="cardFooter" :page="currentPage" :maxPage="maxPage"/>
+      <pagination slot="cardFooter" :page="page" :maxPage="maxPage"/>
     </div>
     <div class="col-12 mt-2" v-if="error">No Data Available</div>
   </div>
@@ -25,24 +25,37 @@ export default {
   name: 'Location',
   data () {
     return {
-      error: null,
       cardKey: 'location',
-      keyword: '',
       pagesize: 50, // 页面显示条数
-      currentPage: Number(this.$router.currentRoute.query.page) || 1 // 当前展示的页数
+      page: Number(this.$router.currentRoute.query.page) || 1 // 当前展示的页数
     }
   },
   computed: {
     ...mapGetters({
-      locationCard: 'currentPage' // 当前页面应该展示的数据
+      locationCard: 'currentPageDate' // 当前页面应该展示的数据
     }),
     maxPage () {
       let { pagesize, length } = this.locationCard
       return Math.ceil(length / pagesize)
+    },
+    error () {
+      return !this.locationCard.length
+    },
+    keyword: {
+      get () {
+        return this.locationCard.keyword
+      },
+      set (value) {
+        this.locationCard.keyword = value
+      }
     }
   },
   created () {
     this.locationCard.length || this.fetchData()
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.fetchData(to.query.page)
+    next()
   },
   methods: {
     settingsRoute () { // 设置路由生成
@@ -52,13 +65,14 @@ export default {
       return this.locationCard.type === 'table' ? this.$store.state.settings[this.locationCard.type][this.cardKey]['contents'] : false
     },
     onSubmit () {
+      this.page = 1
+      this.fetchData()
     },
-    fetchData (to = this.currentPage) { // 获取数据
-      this.error = null
+    fetchData (to = this.page) { // 获取数据
       this.$bar.start()
       this.$store.dispatch('FETCH_TABLE_DATA', {
         params: {
-          uri: this.$router.currentRoute.path,
+          uri: this.locationCard.uri,
           data: {
             keyword: this.keyword,
             page: to,
@@ -66,7 +80,7 @@ export default {
           }
         }
       }).then(() => {
-        this.error = !this.locationCard
+        this.page = Number(to)
         this.$bar.finish()
       })
     }
