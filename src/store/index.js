@@ -21,7 +21,7 @@ export function createStore () {
               'font': 'fa fa-align-justify',
               'size': 'fa-2x',
               'href': '/app/location',
-              home: true,
+              home: true, // 是否显示主页功能区
               'funcs': [
                 {
                   name: '入库',
@@ -43,88 +43,21 @@ export function createStore () {
                   font: 'fa fa-trash-o',
                   href: '/funcs/location/remove'
                 }
-              ]
+              ],
+              data: {
+                name: '库位',
+                home: true, // 是否显示在home页card区
+                type: 'table', // 数据展现的类型
+                settings: true,
+                contents: []
+              }
             }
           }
         }
       },
       home: {
         apps: {},
-        'cards': {
-          'messages': {
-            'name': '信息',
-            'type': 'list',
-            'contents': [
-              {
-                'no': 1,
-                'message': '09/20 10:13:12 张三新建订单x2018010001',
-                'href': '/'
-              },
-              {
-                'no': 2,
-                'message': '09/20 10:13:12 张三新建订单x2018010001',
-                'href': '/'
-              },
-              {
-                'no': 3,
-                'message': '09/20 10:13:12 张三新建订单x2018010001',
-                'href': '/'
-              },
-              {
-                'no': 4,
-                'message': '09/20 10:13:12 张三新建订单x2018010001',
-                'href': '/'
-              }
-            ]
-          },
-          'btOrders': {
-            'name': 'BT订单',
-            'type': 'table',
-            'settings': '/settings/table/btOrders',
-            'contents': [
-              {
-                'no': 1,
-                'first': 'Sammy',
-                'second': 'Kalens',
-                'third': 'Nill',
-                'fourth': 'Jill',
-                'fifth': 'Susan'
-              },
-              {
-                'no': 2,
-                'first': 'Sammy',
-                'second': 'Kalen',
-                'third': 'Nill',
-                'fourth': 'Jill',
-                'fifth': 'Mingming'
-              },
-              {
-                'no': 3,
-                'first': 'Sammy',
-                'second': 'Kalen',
-                'third': 'Nill',
-                'fourth': 'Jill',
-                'fifth': 'Susan'
-              },
-              {
-                'no': 4,
-                'first': 'Sammy',
-                'second': 'Kalen',
-                'third': 'Nill',
-                'fourth': 'Jill',
-                'fifth': 'Susan'
-              },
-              {
-                'no': 5,
-                'first': 'Sammy',
-                'second': 'Kalen',
-                'third': 'Nill',
-                'fourth': 'Jill',
-                'fifth': 'Susan'
-              }
-            ]
-          }
-        }
+        cards: {}
       },
       myself: {
         'name': '张闯创',
@@ -159,8 +92,8 @@ export function createStore () {
       },
       settings: {
         'table': {
-          'btOrders': {
-            'name': 'BT订单',
+          'location': {
+            'name': '库位',
             'type': 'checkbox',
             'contents': {
               'no': {

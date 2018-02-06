@@ -12,17 +12,19 @@
   </header>
 </template>
 
-<script>
+<script type="module">
+import { mapState } from 'vuex'
+
 export default {
   name: 'Headerbar',
   data () {
-    return {
-      config: this.$root.$data.config,
-      myselfName: this.$root.$data.myself.name
-    }
+    return {}
   },
   computed: {
-
+    ...mapState({
+      config: 'configs',
+      myselfName: state => state.myself.name
+    })
   }
 }
 </script>

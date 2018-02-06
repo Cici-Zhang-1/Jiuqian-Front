@@ -22,7 +22,7 @@ import Navbar from '@/components/bars/Navbar'
 import Headerbar from '@/components/bars/Headerbar'
 
 export default {
-  name: 'app',
+  name: 'App',
   data () {
     return {}
   },

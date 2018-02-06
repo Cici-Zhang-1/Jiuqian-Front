@@ -2,18 +2,20 @@
   <div class="row">
     <div class="col-12">
       <form @submit.prevent="onSubmit">
-        <search v-model="defaultValue" :defaultValue="defaultValue" :prepend="false" :append="true"/>
+        <search v-model="keyword" :defaultValue="keyword" :prepend="false" :append="true"/>
       </form>
     </div>
-    <div is="regular-card" :card="card" :cardKey="cardKey" :tableThead="tableThead()">
-      <div slot="cardSetting" v-show="card.settings" class="ml-auto">
+    <div is="regular-card" :card="locationCard" :cardKey="cardKey" :tableThead="tableThead()" v-if="locationCard">
+      <div slot="cardSetting" v-show="locationCard.settings" class="ml-auto">
         <router-link :to="settingsRoute()" class="btn btn-light btn-sm"><i class="fa fa-minus"></i></router-link>
       </div>
     </div>
+    <div class="col-12 mt-2" v-if="error">No Data Available</div>
   </div>
 </template>
 
-<script>
+<script type="module">
+import { mapGetters } from 'vuex'
 import Search from '@/components/forms/Search'
 import RegularCard from '@/components/cards/RegularCard'
 
@@ -21,26 +23,45 @@ export default {
   name: 'Location',
   data () {
     return {
-      cardKey: 'btOrders',
-      defaultValue: ''
+      error: null,
+      cardKey: 'location',
+      keyword: '',
+      pagesize: 50, // 页面显示条数
+      currentPage: Number(this.$router.currentRoute.query.page) || 1 // 当前展示的页数
     }
   },
   computed: {
-    card () {
-      return this.$store.state.home.cards.btOrders
-    }
+    ...mapGetters({
+      locationCard: 'currentPage' // 当前页面应该展示的数据
+    })
   },
-  watch: {
+  created () {
+    this.locationCard.length || this.fetchData()
   },
   methods: {
     settingsRoute () { // 设置路由生成
-      return '/settings/' + this.card.type + '/' + this.cardKey
+      return '/settings/' + this.locationCard.type + '/' + this.cardKey
     },
     tableThead () { // 在Card中表格头部生成
-      return this.card.type === 'table' ? this.$store.state.settings[this.card.type][this.cardKey]['contents'] : false
+      return this.locationCard.type === 'table' ? this.$store.state.settings[this.locationCard.type][this.cardKey]['contents'] : false
     },
     onSubmit () {
-      console.log(this.defaultValue)
+    },
+    fetchData (to = this.currentPage) {
+      // this.error = this.locationCard = null
+      this.$bar.start()
+      this.$store.dispatch('FETCH_TABLE_DATA', {
+        params: {
+          uri: this.$router.currentRoute.path,
+          data: {
+            keyword: this.keyword,
+            page: to,
+            pagesize: this.locationCard ? this.locationCard.pagesize : this.pagesize
+          }
+        }
+      }).then(() => {
+        this.$bar.finish()
+      })
     }
   },
   components: {

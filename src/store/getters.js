@@ -31,6 +31,12 @@ export default {
     })
   },
 
+  activeApp (state) {
+    return state.navbars.filter(_ => {
+      return _.id === 'App'
+    })[0]
+  },
+
   getConfigs (state) {
     return state.configs
   },
@@ -62,5 +68,11 @@ export default {
       }
     }
     return homeApps
+  },
+
+  currentPage (state) { // 返回当前活动页面第数据
+    return state.navbars.filter(navbar => {
+      return navbar.id === 'App'
+    })[0].data
   }
 }

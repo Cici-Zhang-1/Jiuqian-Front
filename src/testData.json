@@ -319,4 +319,80 @@
     "logo": "",
     "href": "/"
   }
+
+  /*
+    'messages': {
+      'name': '信息',
+      'type': 'list',
+      'contents': [
+        {
+          'no': 1,
+          'message': '09/20 10:13:12 张三新建订单x2018010001',
+          'href': '/'
+        },
+        {
+          'no': 2,
+          'message': '09/20 10:13:12 张三新建订单x2018010001',
+          'href': '/'
+        },
+        {
+          'no': 3,
+          'message': '09/20 10:13:12 张三新建订单x2018010001',
+          'href': '/'
+        },
+        {
+          'no': 4,
+          'message': '09/20 10:13:12 张三新建订单x2018010001',
+          'href': '/'
+        }
+      ]
+    },
+    'btOrders': {
+      'name': 'BT订单',
+      'type': 'table',
+      length: 5000,
+      'contents': [
+        {
+          'no': 1,
+          'first': 'Sammy',
+          'second': 'Kalens',
+          'third': 'Nill',
+          'fourth': 'Jill',
+          'fifth': 'Susan'
+        },
+        {
+          'no': 2,
+          'first': 'Sammy',
+          'second': 'Kalen',
+          'third': 'Nill',
+          'fourth': 'Jill',
+          'fifth': 'Mingming'
+        },
+        {
+          'no': 3,
+          'first': 'Sammy',
+          'second': 'Kalen',
+          'third': 'Nill',
+          'fourth': 'Jill',
+          'fifth': 'Susan'
+        },
+        {
+          'no': 4,
+          'first': 'Sammy',
+          'second': 'Kalen',
+          'third': 'Nill',
+          'fourth': 'Jill',
+          'fifth': 'Susan'
+        },
+        {
+          'no': 5,
+          'first': 'Sammy',
+          'second': 'Kalen',
+          'third': 'Nill',
+          'fourth': 'Jill',
+          'fifth': 'Susan'
+        }
+      ]
+    }
+   */
 }

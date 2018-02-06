@@ -4,16 +4,33 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import { createStore } from './store'
-import testData from './testData'
+import { sync } from 'vuex-router-sync'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/custom.css'
 import 'popper.js/dist/umd/popper'
 import 'bootstrap/dist/js/bootstrap.min'
+import Progressbar from './components/bars/Progressbar.vue'
+
+// global progress bar
+const bar = Vue.prototype.$bar = new Vue(Progressbar).$mount()
+document.body.appendChild(bar.$el)
 
 Vue.config.productionTip = false
 
 const store = createStore()
+sync(store, router) // 同步store和router
 
+const app = new Vue({
+  data () {
+    return {
+      activeApp: null
+    }
+  },
+  store,
+  router,
+  components: { App },
+  template: '<App/>'
+})
 store.dispatch('FETCH_NAVBARS').then(function () {
   router.onReady(() => {
     // appbar set
@@ -25,15 +42,6 @@ store.dispatch('FETCH_NAVBARS').then(function () {
         }
       }
     }
+    app.$mount('#app')
   })
-})
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  data: testData,
-  store,
-  router,
-  components: { App },
-  template: '<App/>'
 })

@@ -28,10 +28,27 @@ export default {
     state.navbars = navbars
   },
 
-  OPEN_APP: (state, { app }) => {
+  SET_TABLE_DATA: (state, { tableData }) => {
+    state.navbars.map(navbar => {
+      if (navbar.id === 'App') {
+        for (let i in tableData) {
+          if (navbar.data[i] === undefined) {
+            Vue.set(navbar.data, i, tableData[i])
+          } else {
+            navbar.data[i] = tableData[i]
+          }
+        }
+      }
+      return navbar
+    })
+  },
+
+  OPEN_APP: (state, { app }) => { // 打开app时需要设置navbar
     state.navbars = state.navbars.map(navbar => {
       if (navbar.id === 'App') {
-        navbar = {...navbar, ...app}
+        for (let i in app) {
+          navbar[i] = app[i]
+        }
         navbar.show = true
       }
       return navbar
