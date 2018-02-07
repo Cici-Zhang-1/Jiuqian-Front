@@ -7,6 +7,7 @@ import App from '@/views//App'
 import Myself from '@/views/Myself'
 import Location from '@/views/app/Location'
 import Funcs from '@/views/Funcs'
+import FuncLocation from '@/views/func/FuncLocation'
 
 Vue.use(Router)
 
@@ -60,9 +61,15 @@ export default new Router({
     },
     {
       name: 'Funcs',
-      path: '/funcs/:funcType/:name',
+      path: '/funcs',
       component: Funcs,
-      meta: { showNavbar: false },
+      children: [
+        {
+          name: 'FuncLocation',
+          path: 'location/:action',
+          component: FuncLocation
+        }
+      ],
       props: true
     }
   ]
