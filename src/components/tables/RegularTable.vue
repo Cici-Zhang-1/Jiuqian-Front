@@ -6,9 +6,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr is="regular-tr" v-for="(value, key, index) in table" :trData="value" :key="index">
-        <td slot="item" slot-scope="props" v-show="tableThead[props.itemName].checked">{{ props.itemData }}</td>
-      </tr>
+      <tr is="regular-tr" v-for="(value, key, index) in table" :trData="value" :tableThead="tableThead" :key="index"></tr>
     </tbody>
   </table>
 </template>
@@ -29,7 +27,8 @@ export default {
       required: true
     }
   },
-  methods: {
+  created () {
+    this.$store.commit('SET_ACTIVE_LINE', { tr: null }) // 表单创建时需要清空Active_Line
   },
   components: {
     RegularTr,

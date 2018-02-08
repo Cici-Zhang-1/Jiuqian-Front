@@ -67,7 +67,8 @@ export default new Router({
         {
           name: 'FuncLocation',
           path: 'location/:action',
-          component: FuncLocation
+          component: FuncLocation,
+          props: true
         }
       ],
       props: true

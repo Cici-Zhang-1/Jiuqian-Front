@@ -37,33 +37,6 @@ export default {
     state.navbars = navbars
   },
 
-  SET_TABLE_DATA: (state, { tableData }) => {
-    /* for (let i in state.navbars) {
-      if (state.navbars[i].id === 'App') {
-        for (let j in tableData) {
-          if (state.navbars[i].data[j] === undefined) {
-            Vue.set(state.navbars[i].data, j, tableData[j])
-          } else {
-            state.navbars[i].data[j] = tableData[j]
-          }
-        }
-        break
-      }
-    } */
-    state.navbars.map(navbar => {
-      if (navbar.id === 'App') {
-        for (let i in tableData) {
-          if (navbar.data[i] === undefined) {
-            Vue.set(navbar.data, i, tableData[i])
-          } else {
-            navbar.data[i] = tableData[i]
-          }
-        }
-      }
-      return navbar
-    })
-  },
-
   OPEN_APP: (state, { app }) => { // 打开app时需要设置navbar
     state.navbars = state.navbars.map(navbar => {
       if (navbar.id === 'App') {
@@ -74,5 +47,36 @@ export default {
       }
       return navbar
     })
+  },
+
+  SET_TABLE_DATA: (state, { tableData }) => {
+    for (let i in state.navbars) {
+      if (state.navbars[i].id === 'App') {
+        for (let j in tableData) {
+          if (state.navbars[i].data[j] === undefined) {
+            Vue.set(state.navbars[i].data, j, tableData[j])
+          } else {
+            state.navbars[i].data[j] = tableData[j]
+          }
+        }
+        break
+      }
+    }
+    /* state.navbars.map(navbar => {
+      if (navbar.id === 'App') {
+        for (let i in tableData) {
+          if (navbar.data[i] === undefined) {
+            Vue.set(navbar.data, i, tableData[i])
+          } else {
+            navbar.data[i] = tableData[i]
+          }
+        }
+      }
+      return navbar
+    }) */
+  },
+
+  SET_ACTIVE_LINE: (state, { tr }) => { // 设置表格、List活跃行
+    state.activeLine = tr
   }
 }

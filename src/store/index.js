@@ -106,9 +106,9 @@ export function createStore () {
             'name': '库位',
             'type': 'checkbox',
             'contents': {
-              'no': {
-                'label': 'No',
-                'value': 'No',
+              'id': {
+                'label': 'Id',
+                'value': 'Id',
                 'checked': true
               },
               'first': {
@@ -135,6 +135,7 @@ export function createStore () {
         'logo': '',
         'href': '/'
       },
+      activeLine: null,
       test: [
         {
           a: 1,
