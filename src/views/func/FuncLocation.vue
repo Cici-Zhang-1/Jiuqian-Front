@@ -17,21 +17,30 @@
       <div :class="{show: alert}" class="alert alert-danger fade" role="alert">{{ message }}</div>
       <button class="btn btn-primary w-100" type="submit">保存</button>
     </form>
-    <form v-if="inAction || outAction" @submit.prevent="inOutSubmit" class="needs-validation col-12">
+    <form v-if="inAction || outAction" @submit.prevent="inOutSubmit" onkeydown="if(event.keyCode==13) return false;" class="needs-validation col-12" novalidate>
       <div class="form-group">
         <label>库位名称:</label>
         <input v-model="sn" class="form-control" name="sn" type="text" placeholder="请填写库位名称" readonly required />
       </div>
+      <div v-if="outAction" class="form-group">
+        <label>库位状态:</label>
+        <select v-model="status" class="form-control" name='status'>
+          <option value="0">空</option>
+          <option value="1">未装满</option>
+          <option value="2">满</option>
+        </select>
+      </div>
       <label v-if="inAction" for="searchOrder">搜索订单</label>
       <div v-if="inAction" class="input-group">
-        <input @keyup.enter="search($event.currentTarget)" v-model="searchOrder" id="searchOrder" name="search_order" class="form-control" type="search" placeholder="请输入要入库的订单" />
+        <input @keydown.enter="search($event.currentTarget)" v-model="searchOrder" id="searchOrder" name="search_order" class="form-control" type="search" placeholder="请输入要入库的订单" />
         <div class="input-group-append">
           <button @click="search($event.currentTarget.parentNode.parentNode.firstChild)" class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
         </div>
       </div>
-      <div v-if="outAction" class="form-group">
-        <label>请选择出库订单:</label>
-        <select name="location_order" class="form-control" multiple></select>
+      <div class="form-group">
+        <label>请选择订单:</label>
+        <select v-model="order" id="locationOrder" name="order" class="form-control" multiple required></select>
+        <div class="invalid-feedback">请先选择订单再保存</div>
       </div>
       <div :class="{show: alert}" class="alert alert-danger fade" role="alert">{{ message }}</div>
       <button class="btn btn-primary w-100" type="submit">保存</button>
@@ -57,6 +66,7 @@ export default {
       sn: '',
       status: 0,
       message: '',
+      order: [],
       inOrder: [],
       searchOrder: '',
       alert: false
@@ -66,6 +76,12 @@ export default {
     ...mapState([
       'activeLine'
     ]),
+    orderPrefix () {
+      let d = new Date()
+      let y = d.getFullYear()
+      let m = d.getMonth().toString()
+      return 'X' + y + m.padStart(2, '0')
+    },
     uri () {
       return '/location/' + this.action
     },
@@ -91,24 +107,18 @@ export default {
     } else if (this.removeAction) { // 当需要删除库位时运行
       this.createRemove()
     } else if (this.inAction) { // 当需要入库时运行
+      this.searchOrder = this.orderPrefix
       this.createIn()
+    } else if (this.outAction) {
+      this.createOut()
     }
   },
   methods: {
-    resolveId () { // 获取选中信息的Id
-      if (this.activeLine) {
-        let start = this.activeLine.firstChild
-        while (start && start.getAttribute('name') !== 'id') {
-          start = start.nextSibling
-        }
-        this.id = Number(start.textContent)
-      }
-    },
-    resolveData () {
+    resolveData (keys) {
       if (this.activeLine) {
         let child = this.activeLine.firstChild
         while (child) {
-          if (this[child.getAttribute('name')] !== undefined) {
+          if (keys.includes(child.getAttribute('name'))) {
             this[child.getAttribute('name')] = child.textContent
           }
           child = child.nextSibling
@@ -121,7 +131,7 @@ export default {
         e.target.classList.add('was-validated')
       } else {
         let postReturn = await postData(this.uri, { sn: this.sn, status: this.status })
-        if (postReturn.code) {
+        if (!postReturn.code) {
           this.$router.go(-1)
         } else {
           this.message = postReturn.message
@@ -131,20 +141,32 @@ export default {
       }
     },
     async inOutSubmit (e) {
-      console.log('inOut')
+      if (e.target.checkValidity() === false) {
+        e.stopPropagation()
+        e.target.classList.add('was-validated')
+      } else {
+        let postReturn = await postData(this.uri, { id: this.id, sn: this.sn, order: this.order })
+        if (postReturn.code > 0) {
+          this.message = postReturn.message
+          this.alert = true
+          e.target.addEventListener('click', this.errorClear)
+        } else {
+          this.$router.go(-1)
+        }
+      }
     },
     errorClear (e) { // 清除错误提示
       this.alert = false
       e.currentTarget.removeEventListener(e.type, this.errorClear)
     },
     async createEdit () { // Init Edit
-      this.resolveId()
+      this.resolveData(['id'])
       if (!this.id) {
         alert('请选择需要修改的库位')
         this.$router.go(-1)
       } else {
         let getReturn = await getData(this.uri, { id: this.id })
-        if (getReturn.code) {
+        if (!getReturn.code) {
           this.sn = getReturn.contents.sn
           this.status = getReturn.contents.status
         } else {
@@ -154,14 +176,14 @@ export default {
       }
     },
     async createRemove () { // Init Remove
-      this.resolveId()
+      this.resolveData(['id'])
       if (!this.id) {
         alert('请选择需要删除的库位')
         this.$router.go(-1)
       } else {
         if (window.confirm('您确定要删除库位?')) {
           let postReturn = await postData(this.uri, { id: this.id })
-          if (postReturn.code) {
+          if (!postReturn.code) {
             window.alert('库位删除成功!')
             this.$router.go(-1)
           } else {
@@ -174,12 +196,10 @@ export default {
       }
     },
     async createIn () { // Init In Action
-      this.resolveData()
+      this.resolveData(['id', 'sn'])
       if (!this.id) {
         alert('请选择需要入库的库位')
         this.$router.go(-1)
-      } else {
-
       }
     },
     search (ele) { // 搜索订单
@@ -195,9 +215,19 @@ export default {
             This.alert = true
             ele.addEventListener('focus', This.errorClear)
           } else {
-            if (!This.inOrder.includes(getReturn.contents.num)) {
+            if (!This.order.includes(getReturn.contents.id)) {
+              let a = document.createElement('option')
+              a.value = getReturn.contents.id
+              a.textContent = getReturn.contents.num
+              // a.selected = true
+
+              ele.parentNode.parentNode.getElementsByTagName('select')[0].add(a)
+
+              This.order.push(getReturn.contents.id)
+            }
+            /* if (!This.inOrder.includes(getReturn.contents.num)) {
               This.inOrder.push(getReturn.contents.id) // 将选择的订单推入
-              let id = 'inOrder' + (This.inOrder.length + 1)
+              let id = 'inOrder' + (This.inOrder.length + 1) // 设置in订单Id
 
               let a = document.createElement('div') // div
               let b = document.createElement('input') // input
@@ -221,18 +251,45 @@ export default {
               a.appendChild(c)
 
               ele.parentNode.parentNode.insertBefore(a, ele.parentNode.nextSibling)
+            } */
+          }
+        })
+      }
+      this.searchOrder = this.orderPrefix
+      ele.blur()
+    },
+
+    createOut () {
+      this.resolveData(['id', 'sn', 'status'])
+      if (!this.id) {
+        alert('请选择需要出库的库位')
+        this.$router.go(-1)
+      } else {
+        let This = this
+        getData('/location/search', { id: this.id }).then(function (getReturn) {
+          if (getReturn.code > 0) { // 出现错误
+            alert(getReturn.message)
+            This.$router.go(-1)
+          } else {
+            for (let i in getReturn.contents) {
+              let a = document.createElement('option')
+              a.value = getReturn.contents[i].id
+              a.textContent = getReturn.contents[i].num
+
+              document.getElementById('locationOrder').add(a)
             }
           }
         })
       }
-    },
+    }
+    /* ,
     changeInOrder (e) {
       if (e.currentTarget.checked) {
         this.inOrder.push(e.currentTarget.value)
       } else {
         this.inOrder.splice(this.inOrder.indexOf(e.currentTarget.value))
       }
-    }
+    } */
   }
 }
 </script>
