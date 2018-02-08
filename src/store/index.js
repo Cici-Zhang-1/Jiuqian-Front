@@ -30,7 +30,7 @@ export function createStore () {
                 },
                 {
                   name: '编辑库位',
-                  font: 'fa fa-plus',
+                  font: 'fa fa-pencil-square-o',
                   href: '/funcs/location/edit'
                 },
                 {
@@ -111,19 +111,19 @@ export function createStore () {
                 'value': 'Id',
                 'checked': true
               },
-              'first': {
+              'status': {
                 'label': '状态',
-                'value': 'First',
+                'value': 'Status',
                 'checked': true
               },
-              'second': {
+              'sn': {
                 'label': '名称',
-                'value': 'Second',
+                'value': 'Sn',
                 'checked': true
               },
-              'third': {
+              'order': {
                 'label': '订单号',
-                'value': 'Third',
+                'value': 'Order',
                 'checked': true
               }
             }

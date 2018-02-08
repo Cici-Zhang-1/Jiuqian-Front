@@ -1,8 +1,8 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <form @submit.prevent="onSubmit">
-        <search v-model="keyword" :defaultValue="keyword" :prepend="false" :append="true"/>
+      <form>
+        <search @search="onSubmit" v-model="keyword" :defaultValue="keyword" :prepend="false" :append="true"/>
       </form>
     </div>
     <div is="regular-card" :card="locationCard" :cardKey="cardKey" :tableThead="tableThead()" v-if="locationCard.length">
