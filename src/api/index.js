@@ -26,12 +26,6 @@ const getJSON = function (uri, data = {}) {
   return promise
 }
 
-export function fetchJsonByUri (uri) {
-  return getJSON(uri).then(function (json) {
-    return json
-  })
-}
-
 export function fetchJsonByParams ({ uri, data }) {
   return getJSON(uri, data).then(function (json) {
     return json

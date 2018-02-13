@@ -31,25 +31,25 @@ const app = new Vue({
   components: { App },
   template: '<App/>'
 })
-store.dispatch('FETCH_NAVBARS').then(function () {
-  router.onReady(() => {
-    // appbar set
-    for (let i in store.state.apps) {
-      for (let j in store.state.apps[i]['children']) {
-        if (store.state.apps[i]['children'][j].href === router.currentRoute.path) {
-          store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
-          break
-        }
+
+router.onReady(() => {
+  // appbar set
+  for (let i in store.state.apps) {
+    for (let j in store.state.apps[i]['children']) {
+      if (store.state.apps[i]['children'][j].href === router.currentRoute.path) {
+        store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
+        break
       }
     }
-    router.beforeEach(function (to, from, next) {
-      for (let i in to.matched) {
-        if (to.matched[i].name === 'App') {
-          store.commit('SET_APP_URI', to)
-        }
+  }
+  router.beforeEach(function (to, from, next) {
+    for (let i in to.matched) {
+      if (to.matched[i].name === 'App') {
+        store.commit('SET_APP_URI', to)
+        break
       }
-      next()
-    })
-    app.$mount('#app')
+    }
+    next()
   })
+  app.$mount('#app')
 })

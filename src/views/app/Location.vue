@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <form>
+      <form @submit="onSubmit">
         <search @search="onSubmit" v-model="keyword" :defaultValue="keyword" :prepend="false" :append="true"/>
       </form>
     </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script type="module">
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 import Search from '@/components/forms/Search'
 import RegularCard from '@/components/cards/RegularCard'
 import Pagination from '@/components/others/Pagination'
@@ -34,6 +34,9 @@ export default {
     ...mapGetters({
       locationCard: 'currentPageDate' // 当前页面应该展示的数据
     }),
+    ...mapState([
+      'reload'
+    ]),
     maxPage () {
       let { pagesize, length } = this.locationCard
       return Math.ceil(length / pagesize)
@@ -51,24 +54,27 @@ export default {
     }
   },
   created () {
-    if (!this.locationCard.length || this.page !== this.locationCard.page) { // 第一种情况是因为数据还没有加载，第二种情况是因为加载的page不同
-      this.fetchData()
+    if (this.reload) {
+      this.set_reload({ reload: false })
+      this.$router.replace({query: {page: 1, id: Math.random()}})
+    } else {
+      if (!this.locationCard.length || this.page !== this.locationCard.page) { // 第一种情况是因为数据还没有加载，第二种情况是因为加载的page不同
+        this.fetchData()
+      }
     }
   },
   beforeRouteEnter (to, from, next) {
-    next(vm => {
-      for (let i in to.matched) {
-        if (to.matched[i].name === 'App') {
-          vm.$store.commit('SET_APP_URI', to)
-        }
-      }
-    })
+    next()
   },
   beforeRouteUpdate (to, from, next) {
+    console.log('ddd')
     this.fetchData(to.query.page)
     next()
   },
   methods: {
+    ...mapMutations({
+      set_reload: 'SET_RELOAD'
+    }),
     settingsRoute () { // 设置路由生成
       return '/settings/' + this.locationCard.type + '/' + this.cardKey
     },
@@ -76,7 +82,7 @@ export default {
       return this.locationCard.type === 'table' ? this.$store.state.settings[this.locationCard.type][this.cardKey]['contents'] : false
     },
     onSubmit () {
-      this.$router.push({query: {page: 1}})
+      this.$router.replace({query: {page: 1, id: Math.random()}})
     },
     fetchData (to = this.page) { // 获取数据
       this.$bar.start()

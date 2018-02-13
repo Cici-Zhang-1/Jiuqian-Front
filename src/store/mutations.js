@@ -33,10 +33,6 @@ export default {
     })
   },
 
-  SET_NAVBARS: (state, { navbars }) => {
-    state.navbars = navbars
-  },
-
   OPEN_APP: (state, { app }) => { // 打开app时需要设置navbar
     state.navbars = state.navbars.map(navbar => {
       if (navbar.id === 'App') {
@@ -78,5 +74,9 @@ export default {
 
   SET_ACTIVE_LINE: (state, { tr }) => { // 设置表格、List活跃行
     state.activeLine = tr
+  },
+
+  SET_RELOAD: (state, { reload }) => { // 判断是否需要重新载入
+    state.reload = reload
   }
 }

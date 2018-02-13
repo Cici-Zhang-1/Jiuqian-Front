@@ -49,7 +49,7 @@
 </template>
 
 <script type="module">
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import { getData, postData } from '@/service/service'
 
 export default {
@@ -114,6 +114,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      set_reload: 'SET_RELOAD'
+    }),
     resolveData (keys) {
       if (this.activeLine) {
         let child = this.activeLine.firstChild
@@ -132,6 +135,7 @@ export default {
       } else {
         let postReturn = await postData(this.uri, { sn: this.sn, status: this.status })
         if (!postReturn.code) {
+          this.set_reload({reload: true})
           this.$router.go(-1)
         } else {
           this.message = postReturn.message
@@ -151,6 +155,7 @@ export default {
           this.alert = true
           e.target.addEventListener('click', this.errorClear)
         } else {
+          this.set_reload({reload: true})
           this.$router.go(-1)
         }
       }
@@ -271,13 +276,14 @@ export default {
             alert(getReturn.message)
             This.$router.go(-1)
           } else {
+            let d = document.createElement('div')
             for (let i in getReturn.contents) {
               let a = document.createElement('option')
               a.value = getReturn.contents[i].id
               a.textContent = getReturn.contents[i].num
-
-              document.getElementById('locationOrder').add(a)
+              d.appendChild(a)
             }
+            document.getElementById('locationOrder').innerHTML = d.innerHTML
           }
         })
       }
