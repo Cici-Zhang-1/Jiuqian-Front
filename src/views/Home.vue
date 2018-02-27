@@ -51,13 +51,16 @@ export default {
     home () {
       return this.$store.getters.getStateByKey('home')
     },
-    cards () {
-      return this.home.cards
-    },
     ...(mapGetters({
       navbars: 'activeNavbars',
-      apps: 'getHomeApps'
+      apps: 'getHomeApps',
+      cards: 'getHomeCards'
     }))
+  },
+  created () {
+    if (JSON.stringify(this.apps) === '{}') {
+      this.$store.dispatch('FETCH_APPS')
+    }
   },
   methods: {
     settingsRoute (card, cardKey) {

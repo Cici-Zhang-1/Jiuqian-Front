@@ -2,6 +2,22 @@
  * Created by chuangchuangzhang on 2018/2/2.
  */
 
+/**
+ * parse the data of home card
+ * @param data
+ * @returns {{}}
+ * @private
+ */
+let _parseHomeCards = function (data) {
+  let homeCards = {}
+  for (let i in data) {
+    if (data[i].home) {
+      homeCards[data[i].cid] = data[i]
+    }
+  }
+  return homeCards
+}
+
 export default {
   // ids of the items that should be currently displayed based on
   // current list type and current pagination
@@ -58,6 +74,11 @@ export default {
     return settings
   },
 
+  /**
+   * Get Home Apps
+   * @param state
+   * @returns {{}}
+   */
   getHomeApps (state) {
     let homeApps = {}
     for (let i in state.apps) {
@@ -70,9 +91,38 @@ export default {
     return homeApps
   },
 
-  currentPageDate (state) { // 返回当前活动页面的数据
+  /**
+   * Get Home Cards
+   * @param state
+   */
+  getHomeCards (state) {
+    let homeCards = {}
+    for (let i in state.apps) {
+      if (state.apps[i].cards.length > 0) {
+        homeCards = { ...homeCards, ..._parseHomeCards(state.apps[i].cards) }
+      }
+      for (let k in state.apps[i].children) {
+        if (state.apps[i].children[k].cards.length > 0) {
+          homeCards = { ...homeCards, ..._parseHomeCards(state.apps[i].children[k].cards) }
+        }
+      }
+    }
+    return homeCards
+  },
+
+  currentPageData (state) { // 返回当前活动页面的数据
     return state.navbars.filter(navbar => {
       return navbar.id === 'App'
     })[0].data
+  },
+
+  /**
+   * 当前页面的搜索关键字
+   * @param state
+   */
+  currentPageKeyword (state) {
+    return state.navbars.filter(navbar => {
+      return navbar.id === 'App'
+    })[0].page_search.keyword.value
   }
 }

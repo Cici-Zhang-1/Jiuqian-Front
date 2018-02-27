@@ -36,7 +36,7 @@ router.onReady(() => {
   // appbar set
   for (let i in store.state.apps) {
     for (let j in store.state.apps[i]['children']) {
-      if (store.state.apps[i]['children'][j].href === router.currentRoute.path) {
+      if (store.state.apps[i]['children'][j].url === router.currentRoute.path) {
         store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
         break
       }

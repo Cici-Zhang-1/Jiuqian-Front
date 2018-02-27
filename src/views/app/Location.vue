@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      locationCard: 'currentPageDate' // 当前页面应该展示的数据
+      locationCard: 'currentPageData' // 当前页面应该展示的数据
     }),
     ...mapState([
       'reload'

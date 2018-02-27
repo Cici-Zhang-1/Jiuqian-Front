@@ -6,6 +6,13 @@ import {
 } from '../api'
 
 export default {
+  FETCH_APPS: ({commit}) => {
+    return fetchJsonByParams({ uri: 'apps/read' }).then(data => {
+      if (data.code === 0) {
+        commit('SET_APPS', { ...data })
+      }
+    })
+  },
 
   FETCH_TABLE_DATA: ({commit, dispatch, state}, { params }) => {
     return fetchJsonByParams(params).then(tableData => {

@@ -3,7 +3,12 @@ import Router from 'vue-router'
 import Settings from '@/views/Settings'
 import Home from '@/views/home'
 import Apps from '@/views/Apps'
-import App from '@/views//App'
+import App from '@/views/App'
+import Order from '@/views/Order'
+import OrderRead from '@/views/order/Read'
+import OrderEdit from '@/views/order/Edit'
+import OrderAdd from '@/views/order/Add'
+import OrderRemove from '@/views/order/Remove'
 import Myself from '@/views/Myself'
 import Location from '@/views/app/Location'
 import Funcs from '@/views/Funcs'
@@ -45,6 +50,33 @@ export default new Router({
           name: 'Location',
           path: 'location',
           component: Location
+        }
+      ]
+    },
+    {
+      name: 'Order',
+      path: '/order',
+      component: Order,
+      children: [
+        {
+          name: 'OrderRead',
+          path: 'order/index/read',
+          component: OrderRead
+        },
+        {
+          name: 'OrderAdd',
+          path: 'order/add',
+          component: OrderAdd
+        },
+        {
+          name: 'OrderEdit',
+          path: 'order/edit',
+          component: OrderEdit
+        },
+        {
+          name: 'OrderRemove',
+          path: 'order/remove',
+          component: OrderRemove
         }
       ]
     },

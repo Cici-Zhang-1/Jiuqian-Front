@@ -13,18 +13,16 @@ export function createStore () {
         {
           id: 'Home',
           name: '首页',
-          href: '/home',
-          font: 'fa fa-home',
-          size: 'fa-2x',
+          url: '/home',
+          img: 'fa fa-home',
           show: true,
           component: 'navbar-item'
         },
         {
           id: 'Apps',
           name: '应用',
-          href: '/apps',
-          font: 'fa fa-th',
-          size: 'fa-2x',
+          url: '/apps',
+          img: 'fa fa-th',
           show: true,
           active: false,
           component: 'navbar-item'
@@ -32,9 +30,8 @@ export function createStore () {
         {
           id: 'App',
           name: '',
-          font: 'fa fa-folder',
-          size: 'fa-2x',
-          href: '/app',
+          img: 'fa fa-folder',
+          url: '/app',
           show: false,
           funcs: [],
           component: 'navbar-dropdown'
@@ -42,15 +39,14 @@ export function createStore () {
         {
           id: 'Myself',
           name: '我的',
-          href: '/myself',
-          font: 'fa fa-user',
-          size: 'fa-2x',
+          url: '/myself',
+          img: 'fa fa-user',
           show: true,
           component: 'navbar-item'
         }
       ],
       apps: {
-        database: {
+        /* database: {
           name: '成品库',
           font: 'fa fa-database',
           size: '',
@@ -102,11 +98,7 @@ export function createStore () {
               }
             }
           }
-        }
-      },
-      home: {
-        apps: {},
-        cards: {}
+        } */
       },
       myself: {
         name: '张闯创',
@@ -116,25 +108,25 @@ export function createStore () {
           {
             myOrder: {
               name: '我的订单',
-              font: 'fa fa-folder',
-              href: '/order/myOrder'
+              img: 'fa fa-folder',
+              url: '/order/myOrder'
             },
             myDealer: {
               name: '我的客户',
-              font: 'fa fa-users',
-              href: '/dealer/myDealer'
+              img: 'fa fa-users',
+              url: '/dealer/myDealer'
             }
           },
           {
             mySettings: {
               name: '设置',
-              font: 'fa fa-cogs',
-              href: '/setting/mySettings'
+              img: 'fa fa-cogs',
+              url: '/setting/mySettings'
             },
             signout: {
               name: '退出',
-              font: 'fa fa-sign-out',
-              href: '/sign/in'
+              img: 'fa fa-sign-out',
+              url: '/sign/in'
             }
           }
         ]
@@ -172,7 +164,7 @@ export function createStore () {
       configs: {
         name: '九千',
         logo: '',
-        href: '/'
+        url: '/'
       },
       activeLine: null,
       reload: false,

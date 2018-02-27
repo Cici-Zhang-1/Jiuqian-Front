@@ -1,6 +1,6 @@
 <template>
   <div class="col-3 my-2" @click="openApp({app})">
-    <router-link class="btn p-1 text-center" :to="app.href" tag="a"><i class="d-block" :class="[app.font, app.size]"></i><small>{{ app.name }}</small></router-link>
+    <router-link class="btn p-1 text-center" :to="app.url" tag="a"><i class="d-block fa-2x" :class="[app.img]"></i><small>{{ app.name }}</small></router-link>
   </div>
 </template>
 

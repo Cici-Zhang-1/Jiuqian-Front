@@ -24,16 +24,26 @@ export default {
     Vue.set(state.users, id, user || false) /!* false means user not found *!/
   }, */
 
+  SET_APPS: (state, { contents }) => {
+    state.apps = contents
+  },
+
   SET_APP_URI: (state, { fullPath }) => {
     state.navbars = state.navbars.map(navbar => {
       if (navbar.id === 'App') {
-        navbar.href = fullPath
+        navbar.url = fullPath
       }
       return navbar
     })
   },
 
-  OPEN_APP: (state, { app }) => { // 打开app时需要设置navbar
+  /**
+   * 打开app时需要设置navbar
+   * @param state
+   * @param app
+   * @constructor
+   */
+  OPEN_APP: (state, { app }) => {
     state.navbars = state.navbars.map(navbar => {
       if (navbar.id === 'App') {
         for (let i in app) {

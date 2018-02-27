@@ -4,17 +4,20 @@
 import $ from 'jquery'
 
 const configs = {
-  site_url: 'http://localhost/jiuqian'
+  site_url: 'http://localhost/jiuqian-mobile'
 }
 
 const getJSON = function (uri, data = {}) {
+  if (uri.indexOf('/') !== 0) {
+    uri = '/' + uri
+  }
   const promise = new Promise(function (resolve, reject) {
     $.ajax({
       async: true,
       type: 'GET',
       url: configs.site_url + uri,
       data: { ...data },
-      dataType: 'json',
+      dataType: 'JSONP',
       success: function (data) {
         resolve(data)
       },

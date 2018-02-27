@@ -1,5 +1,5 @@
 <template>
-  <a :href="list.href" class="list-group-item list-group-item-action px-1 text-size-sm">{{ list.message }}</a>
+  <a :href="list.url" class="list-group-item list-group-item-action px-1 text-size-sm">{{ list.message }}</a>
 </template>
 
 <script>

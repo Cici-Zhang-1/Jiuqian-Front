@@ -1,6 +1,6 @@
 <template>
   <header class="navbar navbar-expand navbar-light bg-light fixed-top">
-    <router-link class="navbar-brand mr-auto" :to="config.href" >{{ config.name }}</router-link>
+    <router-link class="navbar-brand mr-auto" :to="config.url" >{{ config.name }}</router-link>
     <ul class="navbar-nav">
       <li class="nav-item">
         <span class="navbar-text">{{ myselfName }}</span>
