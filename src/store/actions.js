@@ -14,9 +14,9 @@ export default {
     })
   },
 
-  FETCH_TABLE_DATA: ({commit, dispatch, state}, { params }) => {
-    return fetchJsonByParams(params).then(tableData => {
-      commit('SET_TABLE_DATA', { tableData })
+  FETCH_DATA: ({commit, dispatch, state}, { params, target }) => {
+    return fetchJsonByParams(params).then(data => {
+      commit('SET_DATA', { data, target })
     })
   }
 }

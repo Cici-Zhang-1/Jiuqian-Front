@@ -1,6 +1,6 @@
 <template>
   <tr @click="activeTr">
-    <td v-for="(value, key, index) in trData" v-show="tableThead[key].checked" :key="index" :name="key">{{ value }}</td>
+    <td v-for="(value, key, index) in tableThead" :name="key" :key="index" v-html="trData[key]"></td>
   </tr>
 </template>
 

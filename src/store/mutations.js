@@ -1,7 +1,6 @@
 /**
  * Created by chuangchuangzhang on 2018/2/2.
  */
-import Vue from 'vue'
 
 export default {
   /* SET_ACTIVE_TYPE: (state, { type }) => {
@@ -55,8 +54,15 @@ export default {
     })
   },
 
-  SET_TABLE_DATA: (state, { tableData }) => {
-    for (let i in state.navbars) {
+  /**
+   * 设置获取的数据
+   * @param state
+   * @param tableData
+   * @constructor
+   */
+  SET_DATA: (state, { data, target }) => {
+    target.data = data.contents
+    /* for (let i in state.navbars) {
       if (state.navbars[i].id === 'App') {
         for (let j in tableData) {
           if (state.navbars[i].data[j] === undefined) {
@@ -67,7 +73,7 @@ export default {
         }
         break
       }
-    }
+    } */
     /* state.navbars.map(navbar => {
       if (navbar.id === 'App') {
         for (let i in tableData) {

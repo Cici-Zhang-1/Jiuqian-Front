@@ -2,7 +2,7 @@
   <table class="table table-striped table-responsive">
     <thead>
       <tr>
-        <th is="regular-th" v-for="(value, key, index) in tableThead" :thData="value" :key="index" v-show="value.checked"></th>
+        <th is="regular-th" v-for="(value, key, index) in tableThead" :thData="value" :key="index"></th>
       </tr>
     </thead>
     <tbody>
@@ -37,3 +37,9 @@ export default {
 
 }
 </script>
+
+<style scoped>
+  table thead, table tbody{
+    min-width: 100%;
+  }
+</style>

@@ -117,6 +117,15 @@ export default {
   },
 
   /**
+   * 当前页面Cards
+   * @param state
+   */
+  currentPageCards (state) {
+    return state.navbars.filter(navbar => {
+      return navbar.id === 'App'
+    })[0].cards
+  },
+  /**
    * 当前页面的搜索关键字
    * @param state
    */

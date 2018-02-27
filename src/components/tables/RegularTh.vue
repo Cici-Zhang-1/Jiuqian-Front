@@ -1,6 +1,6 @@
 <template>
   <th>
-    {{ thData.value }}
+    {{ thData.label }}
   </th>
 </template>
 
