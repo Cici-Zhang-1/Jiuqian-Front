@@ -125,13 +125,44 @@ export default {
       return navbar.id === 'App'
     })[0].cards
   },
+
   /**
-   * 当前页面的搜索关键字
+   * 获取当前页面搜索设置
    * @param state
+   * @returns {*}
    */
-  currentPageKeyword (state) {
+  currentPageSearch (state) {
     return state.navbars.filter(navbar => {
       return navbar.id === 'App'
-    })[0].page_search.keyword.value
+    })[0].page_search
+  },
+
+  /**
+   * 生成当前搜索界面的键值对
+   * @param state
+   * @returns {{}}
+   */
+  currentPageSearchValues (state) {
+    let t = state.navbars.filter(navbar => {
+      return navbar.id === 'App'
+    })[0].page_search
+
+    let r = {}
+
+    for (let i in t) {
+      r[i] = t[i].value
+    }
+    return r
+  },
+
+  /**
+   * 获取reload状态
+   * @param state
+   * @returns {Function}
+   */
+  getReload (state) {
+    return function () {
+      return state.reload
+    }
   }
 }

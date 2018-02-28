@@ -91,8 +91,7 @@ export default {
           uri: this.locationCard.uri,
           data: {
             keyword: this.keyword,
-            page: to,
-            pagesize: this.locationCard ? this.locationCard.pagesize : this.pagesize
+            page: to
           }
         }
       }).then(() => {

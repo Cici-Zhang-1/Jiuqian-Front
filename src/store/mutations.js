@@ -1,7 +1,7 @@
 /**
  * Created by chuangchuangzhang on 2018/2/2.
  */
-
+import Vue from 'vue'
 export default {
   /* SET_ACTIVE_TYPE: (state, { type }) => {
     state.activeType = type
@@ -60,8 +60,8 @@ export default {
    * @param tableData
    * @constructor
    */
-  SET_DATA: (state, { data, target }) => {
-    target.data = data.contents
+  SET_DATA: (state, { contents, target }) => {
+    Vue.set(target, 'data', contents)
     /* for (let i in state.navbars) {
       if (state.navbars[i].id === 'App') {
         for (let j in tableData) {
@@ -94,5 +94,12 @@ export default {
 
   SET_RELOAD: (state, { reload }) => { // 判断是否需要重新载入
     state.reload = reload
+  },
+
+  RESET_CARD: (state, { card }) => {
+    card.data.length = 0
+    card.data.p = 1
+    card.data.pn = 0
+    card.data.content = {}
   }
 }

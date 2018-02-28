@@ -2,7 +2,7 @@
   <table class="table table-striped table-responsive">
     <thead>
       <tr>
-        <th is="regular-th" v-for="(value, key, index) in tableThead" :thData="value" :key="index"></th>
+        <th is="regular-th" v-for="(value, key, index) in tableThead" :thData="value" :class="[ value.classes ]" :key="index"></th>
       </tr>
     </thead>
     <tbody>
