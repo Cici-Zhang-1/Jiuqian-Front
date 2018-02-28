@@ -14,9 +14,28 @@ export default {
     })
   },
 
+  /**
+   *
+   * @param commit
+   * @param dispatch
+   * @param state
+   * @param params
+   * {
+   *    uri: this.card.url,
+   *    data: {
+   *      keyword: this.keyword,
+   *      page: to,
+   *      pagesize: this.card ? this.card.pagesize : this.pagesize
+   *    }
+   *  }
+   * @param target
+   * @constructor
+   */
   FETCH_DATA: ({commit, dispatch, state}, { params, target }) => {
     return fetchJsonByParams(params).then(data => {
-      commit('SET_DATA', { data, target })
+      if (data.code === 0) {
+        commit('SET_DATA', { ...data, target })
+      }
     })
   }
 }

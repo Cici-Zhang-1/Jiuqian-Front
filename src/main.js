@@ -34,22 +34,26 @@ const app = new Vue({
 
 router.onReady(() => {
   // appbar set
-  for (let i in store.state.apps) {
-    for (let j in store.state.apps[i]['children']) {
-      if (store.state.apps[i]['children'][j].url === router.currentRoute.path) {
-        store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
-        break
+  if (JSON.stringify(store.state.apps) === '{}') {
+    store.dispatch('FETCH_APPS').then(function () {
+      for (let i in store.state.apps) {
+        for (let j in store.state.apps[i]['children']) {
+          if (store.state.apps[i]['children'][j].url === router.currentRoute.path) {
+            store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
+            break
+          }
+        }
       }
-    }
+      router.beforeEach(function (to, from, next) {
+        for (let i in to.matched) {
+          if (to.matched[i].name === 'App') {
+            store.commit('SET_APP_URI', to)
+            break
+          }
+        }
+        next()
+      })
+      app.$mount('#app')
+    })
   }
-  router.beforeEach(function (to, from, next) {
-    for (let i in to.matched) {
-      if (to.matched[i].name === 'App') {
-        store.commit('SET_APP_URI', to)
-        break
-      }
-    }
-    next()
-  })
-  app.$mount('#app')
 })

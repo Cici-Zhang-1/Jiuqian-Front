@@ -10,7 +10,6 @@ import OrderEdit from '@/views/order/Edit'
 import OrderAdd from '@/views/order/Add'
 import OrderRemove from '@/views/order/Remove'
 import Myself from '@/views/Myself'
-import Location from '@/views/app/Location'
 import Funcs from '@/views/Funcs'
 import FuncLocation from '@/views/func/FuncLocation'
 
@@ -44,14 +43,7 @@ export default new Router({
     {
       name: 'App',
       path: '/app',
-      component: App,
-      children: [
-        {
-          name: 'Location',
-          path: 'location',
-          component: Location
-        }
-      ]
+      component: App
     },
     {
       name: 'Order',

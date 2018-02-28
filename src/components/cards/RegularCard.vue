@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 my-2">
-    <div class="card">
+    <div class="card" v-if="!error">
       <div class="card-header bg-primary d-flex flex-row">
         <div>
           {{ card.name }}
@@ -11,17 +11,19 @@
       </div>
       <div class="card-body p-0 card-body-h">
         <regular-table v-if="card.card_type === 'table'" :table="card.data.content" :tableThead="card.elements"/>
-        <regular-list-group v-else-if="card.card_type === 'list'" :lists="card.data"/>
-        <check-lists class="p-1" v-else-if="card.card_type === 'checkbox'" :checkLists="card.data"/>
+        <regular-list-group v-else-if="card.card_type === 'list'" :lists="card.data.content"/>
+        <check-lists class="p-1" v-else-if="card.card_type === 'checkbox'" :checkLists="card.data.content"/>
       </div>
       <div class="card-footer p-1">
         <pagination :page="page" :maxPage="maxPage"/>
       </div>
     </div>
+    <div class="col-12 mt-2" v-if="error">No Data Available</div>
   </div>
 </template>
 
 <script>
+// import { mapState } from 'vuex'
 import RegularTable from '@/components/tables/RegularTable'
 import RegularListGroup from '@/components/lists/RegularListGroup'
 import CheckLists from '@/components/forms/CheckLists'
@@ -39,13 +41,15 @@ export default {
   },
   data () {
     return {
-      pagesize: 50, // 页面显示条数
       page: Number(this.$router.currentRoute.query.page) || 1 // 当前展示的页数
     }
   },
   computed: {
     maxPage () {
-      return parseInt(this.card.data.num)
+      return parseInt(this.card.data.pn)
+    },
+    error () {
+      return !this.maxPage
     }
   },
   created () {
@@ -53,19 +57,24 @@ export default {
       this.fetchData()
     }
   },
+  watch: {
+    '$route': function (to, from) {
+      this.$store.commit('RESET_CARD', { card: this.card })
+      this.fetchData(this.$store.getters.currentPageSearchValues, to.query.page)
+    }
+  },
   methods: {
     settingsRoute () { // 设置路由生成
       return '/settings/' + this.card.card_setting + '/' + this.card.cid
     },
-    fetchData (to = this.page) { // 获取数据
+    fetchData (pageSearch = {}, to = this.page) { // 获取数据
       this.$bar.start()
       this.$store.dispatch('FETCH_DATA', {
         params: {
           uri: this.card.url,
           data: {
-            keyword: this.keyword,
-            page: to,
-            pagesize: this.card ? this.card.pagesize : this.pagesize
+            ...pageSearch,
+            p: to
           }
         },
         target: this.card
@@ -74,10 +83,6 @@ export default {
         this.$bar.finish()
       })
     }
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.fetchData(to.query.page)
-    next()
   },
   components: {
     RegularTable,

@@ -57,11 +57,6 @@ export default {
       cards: 'getHomeCards'
     }))
   },
-  created () {
-    if (JSON.stringify(this.apps) === '{}') {
-      this.$store.dispatch('FETCH_APPS')
-    }
-  },
   methods: {
     settingsRoute (card, cardKey) {
       return '/settings/' + card.type + '/' + cardKey

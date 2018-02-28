@@ -11,9 +11,6 @@ import NavbarDropdown from './NavbarDropdown.vue'
 export default {
   name: 'Navbar',
   props: ['navbars'],
-  data () {
-    return {}
-  },
   components: {
     NavbarItem,
     NavbarDropdown
