@@ -28,12 +28,7 @@ export default {
   },
 
   SET_APP_URI: (state, { fullPath }) => {
-    state.navbars = state.navbars.map(navbar => {
-      if (navbar.id === 'App') {
-        navbar.url = fullPath
-      }
-      return navbar
-    })
+    state.navbars[state.NAVBAR_APP_INDEX].url = fullPath
   },
 
   /**
@@ -42,16 +37,23 @@ export default {
    * @param app
    * @constructor
    */
-  OPEN_APP: (state, { app }) => {
-    state.navbars = state.navbars.map(navbar => {
-      if (navbar.id === 'App') {
-        for (let i in app) {
-          navbar[i] = app[i]
-        }
-        navbar.show = true
+  OPEN_APP: (state, { app, url = '' }) => {
+    if (state.navbars[state.NAVBAR_APP_INDEX].id === 'App') {
+      for (let i in app) {
+        state.navbars[state.NAVBAR_APP_INDEX][i] = app[i]
       }
-      return navbar
-    })
+      state.navbars[state.NAVBAR_APP_INDEX].show = true
+    } else {
+      state.navbars = state.navbars.map(navbar => {
+        if (navbar.id === 'App') {
+          for (let i in app) {
+            navbar[i] = app[i]
+          }
+          navbar.show = true
+        }
+        return navbar
+      })
+    }
   },
 
   /**
@@ -88,8 +90,15 @@ export default {
     }) */
   },
 
-  SET_ACTIVE_LINE: (state, { tr }) => { // 设置表格、List活跃行
-    state.activeLine = tr
+  SET_LINE_ACTIVITY: (state, { tr }) => { // 设置表格、List活跃行
+    // state.activeLine = tr
+    Vue.set(tr, 'checked', !tr.checked)
+  },
+
+  SET_INACTIVE_LINES: (state, { table }) => {
+    table.map(__ => {
+      Vue.set(__, 'checked', false)
+    })
   },
 
   SET_RELOAD: (state, { reload }) => { // 判断是否需要重新载入

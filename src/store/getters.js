@@ -75,6 +75,17 @@ export default {
   },
 
   /**
+   * 获取card Info
+   * @param state
+   * @returns {function({id: *})}
+   */
+  getCard: (state) => ({ id }) => {
+    return state.navbars[state.NAVBAR_APP_INDEX].cards.filter(__ => {
+      return __.cid === id
+    })[0]
+  },
+
+  /**
    * Get Home Apps
    * @param state
    * @returns {{}}

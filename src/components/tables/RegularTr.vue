@@ -1,16 +1,46 @@
 <template>
-  <tr @click="activeTr">
-    <td v-for="(value, key, index) in tableThead" :name="key" :class="[ value.classes ]" :key="index" v-html="trData[key]"></td>
+  <tr :class="{'table-success': trData.checked}" :id="id">
+    <td ><input type="checkbox" v-model="trData.checked" /> </td>
+    <td v-for="(value, key, index) in tableThead" :name="key" :class="[ value.classes ]" :key="index" v-if="value.checked" v-html="trData[key]"></td>
   </tr>
 </template>
 
 <script>
+import { uuid } from '@/assets/js/custom'
+
 export default {
   name: 'RegularTr',
   props: ['trData', 'tableThead'],
+  data () {
+    return {
+      id: 'tr' + uuid()
+    }
+  },
+  mounted () {
+    let myElement = document.getElementById(this.id)
+
+    let mc = new Hammer(myElement)
+    let This = this
+    mc.on("press", function(ev) {
+      // console.log('pressed')
+      This.$store.commit('SET_LINE_ACTIVITY', { tr: This.trData })
+    })
+    mc.on("click, tap", function(ev) {
+      if (!This.trData.checked) {
+        This.$emit('inactive', 'hi')
+      }
+      This.$store.commit('SET_LINE_ACTIVITY', { tr: This.trData })
+    })
+  },
   methods: {
     activeTr (e) {
-      if (!e.currentTarget.classList.contains('table-success')) {
+      /* if (!this.trData.checked) {
+        this.$emit('inactive', 'hi')
+      }
+      this.$store.commit('SET_LINE_ACTIVITY', { tr: this.trData }) */
+      // this.setActiveLine({ tr: this.trData })
+      //Vue.set(this.trData, 'checked', !this.trData.checked)
+      /* if (!e.currentTarget.classList.contains('table-success')) {
         if (e.currentTarget.parentNode.getElementsByClassName('table-success').length > 0) {
           for (let ele of e.currentTarget.parentNode.getElementsByClassName('table-success')) {
             ele.classList.remove('table-success')
@@ -18,11 +48,8 @@ export default {
         }
         e.currentTarget.className = 'table-success'
         this.$store.commit('SET_ACTIVE_LINE', { tr: e.currentTarget })
-      }
+      } */
     }
-  },
-  data () {
-    return {}
   }
 }
 </script>

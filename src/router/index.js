@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Settings from '@/views/Settings'
+import SettingCard from '@/views/settings/SettingCard'
 import Home from '@/views/home'
 import Apps from '@/views/Apps'
 import App from '@/views/App'
@@ -79,9 +80,16 @@ export default new Router({
     },
     {
       name: 'Settings',
-      path: '/settings/:settingType/:name',
+      path: '/settings',
       component: Settings,
-      props: true
+      children: [
+        {
+          name: 'SettingCard',
+          path: 'card/:id',
+          component: SettingCard,
+          props: true
+        }
+      ]
     },
     {
       name: 'Funcs',

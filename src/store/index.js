@@ -45,6 +45,7 @@ export function createStore () {
           component: 'navbar-item'
         }
       ],
+      NAVBAR_APP_INDEX: 2,
       apps: {
         /* database: {
           name: '成品库',
@@ -130,36 +131,6 @@ export function createStore () {
             }
           }
         ]
-      },
-      settings: {
-        table: {
-          location: {
-            name: '库位',
-            type: 'checkbox',
-            contents: {
-              id: {
-                label: 'Id',
-                value: 'Id',
-                checked: true
-              },
-              status: {
-                label: '状态',
-                value: 'Status',
-                checked: true
-              },
-              sn: {
-                label: '名称',
-                value: 'Sn',
-                checked: true
-              },
-              order: {
-                label: '订单号',
-                value: 'Order',
-                checked: true
-              }
-            }
-          }
-        }
       },
       configs: {
         name: '九千',

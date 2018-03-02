@@ -7,7 +7,7 @@
           <span class="sr-only">Previous</span>
         </router-link>
       </li>
-      <li class="page-item active"><a class="page-link" href="#">{{ page }}/{{ maxPage }}<span class="sr-only">(current)</span></a></li>
+      <li class="page-item active"><a class="page-link" href="javascript:void(0);">{{ page }}/{{ maxPage }}<span class="sr-only">(current)</span></a></li>
       <li class="page-item" :class="{disabled: next}">
         <router-link class="page-link" :to="nextRouter" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>

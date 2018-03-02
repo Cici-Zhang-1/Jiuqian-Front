@@ -34,9 +34,6 @@ export default {
   props: {
     card: {
       type: Object
-    },
-    cardKey: {// card 填充内容名称
-      required: false
     }
   },
   data () {
@@ -58,14 +55,14 @@ export default {
     }
   },
   watch: {
-    '$route': function (to, from) {
+    '$route': function (to, from) { // route变化时更新数据
       this.$store.commit('RESET_CARD', { card: this.card })
       this.fetchData(this.$store.getters.currentPageSearchValues, to.query.page)
     }
   },
   methods: {
     settingsRoute () { // 设置路由生成
-      return '/settings/' + this.card.card_setting + '/' + this.card.cid
+      return '/settings/card/' + this.card.cid
     },
     fetchData (pageSearch = {}, to = this.page) { // 获取数据
       this.$bar.start()

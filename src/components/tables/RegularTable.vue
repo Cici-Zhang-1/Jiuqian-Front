@@ -2,18 +2,18 @@
   <table class="table table-striped table-responsive">
     <thead>
       <tr>
-        <th is="regular-th" v-for="(value, key, index) in tableThead" :thData="value" :class="[ value.classes ]" :key="index"></th>
+        <th >选中</th>
+        <th v-for="(value, key, index) in tableThead" :class="[ value.classes ]" :key="index" v-if="value.checked">{{ value.label }}</th>
       </tr>
     </thead>
-    <tbody>
-      <tr is="regular-tr" v-for="(value, key, index) in table" :trData="value" :tableThead="tableThead" :key="index"></tr>
+    <tbody >
+      <tr @inactive="inactiveTr" is="regular-tr" v-for="(value, key, index) in table" :trData="value" :tableThead="tableThead" :key="index"></tr>
     </tbody>
   </table>
 </template>
 
 <script>
 import RegularTr from './RegularTr'
-import RegularTh from './RegularTh'
 
 export default {
   name: 'RegularTable',
@@ -27,14 +27,14 @@ export default {
       required: true
     }
   },
-  created () {
-    this.$store.commit('SET_ACTIVE_LINE', { tr: null }) // 表单创建时需要清空Active_Line
+  methods: {
+    inactiveTr (e) {
+      this.$store.commit('SET_INACTIVE_LINES', { table: this.table })
+    }
   },
   components: {
-    RegularTr,
-    RegularTh
+    RegularTr
   }
-
 }
 </script>
 

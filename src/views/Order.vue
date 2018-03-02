@@ -37,11 +37,6 @@ export default {
       this.$store.commit('SET_APP_URI', to)
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      vm.$store.commit('SET_APP_URI', to)
-    })
-  },
   components: {
     Navbar,
     Headerbar

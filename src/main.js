@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/custom.css'
 import 'popper.js/dist/umd/popper'
 import 'bootstrap/dist/js/bootstrap.min'
+import 'hammerjs/hammer'
 import Progressbar from './components/bars/Progressbar.vue'
 
 // global progress bar
@@ -33,13 +34,16 @@ const app = new Vue({
 })
 
 router.onReady(() => {
-  // appbar set
   if (JSON.stringify(store.state.apps) === '{}') {
+    // TODO 放在这个地方加载App，耗时过长，应该有加载界面
     store.dispatch('FETCH_APPS').then(function () {
       for (let i in store.state.apps) {
         for (let j in store.state.apps[i]['children']) {
           if (store.state.apps[i]['children'][j].url === router.currentRoute.path) {
             store.commit('OPEN_APP', { app: store.state.apps[i]['children'][j] })
+            if (router.currentRoute.fullPath !== store.state.apps[i]['children'][j].url) {
+              store.commit('SET_APP_URI', router.currentRoute)
+            }
             break
           }
         }
