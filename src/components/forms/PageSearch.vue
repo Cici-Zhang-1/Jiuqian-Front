@@ -85,7 +85,6 @@ export default {
           break
         default:
           type = 'form-group-input'
-          type = value
       }
       return type
     }

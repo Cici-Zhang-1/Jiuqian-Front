@@ -2,7 +2,7 @@
   <table class="table table-striped table-responsive">
     <thead>
       <tr>
-        <th >选中</th>
+        <th class="d-none">选中</th>
         <th v-for="(value, key, index) in tableThead" :class="[ value.classes ]" :key="index" v-if="value.checked">{{ value.label }}</th>
       </tr>
     </thead>

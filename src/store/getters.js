@@ -61,6 +61,10 @@ export default {
     return state[key]
   },
 
+  getReload: (state) => {
+    return state.reload
+  },
+
   // 获取设置的内容项
   getSettings: (state) => ({ settingType, name }) => {
     let settings = {}
@@ -122,9 +126,10 @@ export default {
   },
 
   currentPageData (state) { // 返回当前活动页面的数据
-    return state.navbars.filter(navbar => {
+    return state.navbars[state.NAVBAR_APP_INDEX].data
+    /* return state.navbars.filter(navbar => {
       return navbar.id === 'App'
-    })[0].data
+    })[0].data */
   },
 
   /**
@@ -132,9 +137,10 @@ export default {
    * @param state
    */
   currentPageCards (state) {
-    return state.navbars.filter(navbar => {
+    return state.navbars[state.NAVBAR_APP_INDEX].cards
+    /* return state.navbars.filter(navbar => {
       return navbar.id === 'App'
-    })[0].cards
+    })[0].cards */
   },
 
   /**
@@ -143,11 +149,20 @@ export default {
    * @returns {*}
    */
   currentPageSearch (state) {
-    return state.navbars.filter(navbar => {
+    return state.navbars[state.NAVBAR_APP_INDEX].page_search
+    /* return state.navbars.filter(navbar => {
       return navbar.id === 'App'
-    })[0].page_search
+    })[0].page_search */
   },
 
+  /**
+   * 当前页面的表单元素
+   * @param state
+   * @returns {*|string|HTMLCollectionOf<HTMLFormElement>}
+   */
+  currentPageForms (state) {
+    return state.navbars[state.NAVBAR_APP_INDEX].page_forms
+  },
   /**
    * 生成当前搜索界面的键值对
    * @param state
@@ -167,13 +182,64 @@ export default {
   },
 
   /**
-   * 获取reload状态
+   * 当前页面的Func
    * @param state
-   * @returns {Function}
+   * @returns {function({url: *})}
    */
-  getReload (state) {
-    return function () {
-      return state.reload
+  currentPageFunc: (state) => ({ url }) => {
+    console.log(state.navbars[state.NAVBAR_APP_INDEX])
+    return state.navbars[state.NAVBAR_APP_INDEX].funcs.filter(__ => {
+      return __.url === url
+    })[0]
+  },
+
+  /**
+   * 获取当前页面的活动行
+   * @param state
+   * @returns {function({url: *})}
+   */
+  currentPageActiveLine: (state) => ({ url, all = false }) => {
+    let line = []
+    state.navbars[state.NAVBAR_APP_INDEX].cards.forEach(__ => {
+      if ((__.data.length !== undefined && __.data.length > 0) ||
+        (__.data.content !== undefined && ((__.data.content instanceof Array && __.data.content.length > 0) ||
+          (__.data.content instanceof Object && JSON.stringify(__.data.content) !== '{}')
+        ))) {
+        for (let j in __.data.content) {
+          if (__.data.content[j].checked) {
+            line.push(__.data.content[j])
+          }
+        }
+      }
+    })
+    if (line.length === 0) {
+      return false
+    } else {
+      if (all) {
+        return line
+      } else {
+        return line[0]
+      }
     }
+  },
+
+  /**
+   * 生成需要提交的表单的键值对
+   * @param state
+   * @returns {function({forms: *})}
+   */
+  generatePostData: (state) => ({ forms = {}, trs = [] }) => {
+    let data = {}
+    if (JSON.stringify(forms) !== '{}' && trs.length === 0) {
+      for (let i in forms) {
+        data[i] = forms[i].value
+      }
+    } else if (trs.length !== 0) {
+      for (let i in trs) {
+        data[i] = trs[i].v
+      }
+    }
+
+    return data
   }
 }

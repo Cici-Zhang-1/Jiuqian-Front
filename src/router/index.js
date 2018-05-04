@@ -6,7 +6,8 @@ import Home from '@/views/home'
 import Apps from '@/views/Apps'
 import App from '@/views/App'
 import Order from '@/views/Order'
-import OrderRead from '@/views/order/Read'
+import OrderIndexRead from '@/views/order/index/Read'
+import OrderIndexAdd from '@/views/order/index/Add'
 import OrderEdit from '@/views/order/Edit'
 import OrderAdd from '@/views/order/Add'
 import OrderRemove from '@/views/order/Remove'
@@ -52,19 +53,34 @@ export default new Router({
       component: Order,
       children: [
         {
-          name: 'OrderRead',
+          name: 'OrderIndexRead',
           path: 'order/index/read',
-          component: OrderRead
+          component: OrderIndexRead
+        },
+        {
+          name: 'OrderIndexAdd',
+          path: 'order/index/add',
+          component: OrderIndexAdd
         },
         {
           name: 'OrderAdd',
           path: 'order/add',
-          component: OrderAdd
+          component: OrderAdd,
+          meta: {
+            showNavbars: false,
+            showHeaderbar: false,
+            showFuncbars: true
+          }
         },
         {
           name: 'OrderEdit',
           path: 'order/edit',
-          component: OrderEdit
+          component: OrderEdit,
+          meta: {
+            showNavbars: false,
+            showHeaderbar: false,
+            showFuncbars: true
+          }
         },
         {
           name: 'OrderRemove',

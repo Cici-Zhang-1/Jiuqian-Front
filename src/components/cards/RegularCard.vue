@@ -23,7 +23,7 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import RegularTable from '@/components/tables/RegularTable'
 import RegularListGroup from '@/components/lists/RegularListGroup'
 import CheckLists from '@/components/forms/CheckLists'
@@ -42,6 +42,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      reload: 'getReload'
+    }),
     maxPage () {
       return parseInt(this.card.data.pn)
     },
@@ -52,6 +55,10 @@ export default {
   created () {
     if (!this.card.data.num || this.page !== this.card.data.p) { // 第一种情况是因为数据还没有加载，第二种情况是因为加载的page不同
       this.fetchData()
+    } else if (this.reload) { // 当Add, Edit, Remove发生时，需要重新加载数据
+      this.set_reload({reload: false})
+      this.$store.commit('RESET_CARD', { card: this.card })
+      this.fetchData(this.$store.getters.currentPageSearchValues, this.page)
     }
   },
   watch: {
@@ -61,6 +68,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      set_reload: 'SET_RELOAD'
+    }),
     settingsRoute () { // 设置路由生成
       return '/settings/card/' + this.card.cid
     },

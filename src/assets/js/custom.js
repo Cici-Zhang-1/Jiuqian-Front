@@ -28,14 +28,15 @@ let settingSave = function (This, $form) {
  * @param radix
  * @returns {string}
  */
-let uuid = function(len = 8 , radix = 0) {
+let uuid = function (len = 8, radix = 0) {
   let chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
-  let uuid = [], i
+  let uuid = []
+  let i
   radix = radix || chars.length
 
   if (len) {
     // Compact form
-    for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix]
+    for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix]
   } else {
     // rfc4122, version 4 form
     let r
@@ -48,8 +49,8 @@ let uuid = function(len = 8 , radix = 0) {
     // per rfc4122, sec. 4.1.5
     for (i = 0; i < 36; i++) {
       if (!uuid[i]) {
-        r = 0 | Math.random()*16
-        uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r]
+        r = 0 | Math.random() * 16
+        uuid[i] = chars[(i === 19) ? (r & 0x3) | 0x8 : r]
       }
     }
   }
@@ -57,4 +58,37 @@ let uuid = function(len = 8 , radix = 0) {
   return uuid.join('')
 }
 
-export {settingSave, uuid}
+/**
+ * 判断form group type
+ * @param value
+ * @returns {string}
+ */
+let formGroupType = function (value) {
+  let type = ''
+  switch (value) {
+    case 'text':
+    case 'password':
+    case 'hidden':
+    case 'number':
+    case 'date':
+      type = 'form-group-input'
+      break
+    case 'select':
+      type = 'form-group-select'
+      break
+    case 'checkbox':
+      type = 'form-group-checkbox'
+      break
+    case 'radio':
+      type = 'form-group-radio'
+      break
+    case 'textarea':
+      type = 'form-group-textarea'
+      break
+    default:
+      type = 'form-group-input'
+  }
+  return type
+}
+
+export { settingSave, uuid, formGroupType }

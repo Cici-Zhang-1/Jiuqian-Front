@@ -9,7 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/custom.css'
 import 'popper.js/dist/umd/popper'
 import 'bootstrap/dist/js/bootstrap.min'
-import 'hammerjs/hammer'
 import Progressbar from './components/bars/Progressbar.vue'
 
 // global progress bar

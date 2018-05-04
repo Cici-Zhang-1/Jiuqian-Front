@@ -106,9 +106,9 @@ export default {
   },
 
   RESET_CARD: (state, { card }) => {
-    card.data.length = 0
-    card.data.p = 1
-    card.data.pn = 0
+    card.data.num = 0 // 总数量
+    card.data.p = 1 // 当前页数
+    card.data.pn = 0 // 总页数
     card.data.content = {}
   }
 }

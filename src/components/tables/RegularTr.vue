@@ -1,12 +1,13 @@
 <template>
   <tr :class="{'table-success': trData.checked}" :id="id">
-    <td ><input type="checkbox" v-model="trData.checked" /> </td>
+    <td class="d-none"><input type="checkbox" v-model="trData.checked" /> </td>
     <td v-for="(value, key, index) in tableThead" :name="key" :class="[ value.classes ]" :key="index" v-if="value.checked" v-html="trData[key]"></td>
   </tr>
 </template>
 
 <script>
 import { uuid } from '@/assets/js/custom'
+import Hammer from 'hammerjs'
 
 export default {
   name: 'RegularTr',
@@ -21,11 +22,10 @@ export default {
 
     let mc = new Hammer(myElement)
     let This = this
-    mc.on("press", function(ev) {
-      // console.log('pressed')
+    mc.on('press', function (ev) {
       This.$store.commit('SET_LINE_ACTIVITY', { tr: This.trData })
     })
-    mc.on("click, tap", function(ev) {
+    mc.on('click, tap', function (ev) {
       if (!This.trData.checked) {
         This.$emit('inactive', 'hi')
       }
@@ -39,7 +39,7 @@ export default {
       }
       this.$store.commit('SET_LINE_ACTIVITY', { tr: this.trData }) */
       // this.setActiveLine({ tr: this.trData })
-      //Vue.set(this.trData, 'checked', !this.trData.checked)
+      // Vue.set(this.trData, 'checked', !this.trData.checked)
       /* if (!e.currentTarget.classList.contains('table-success')) {
         if (e.currentTarget.parentNode.getElementsByClassName('table-success').length > 0) {
           for (let ele of e.currentTarget.parentNode.getElementsByClassName('table-success')) {
